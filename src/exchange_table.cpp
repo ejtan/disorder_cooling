@@ -1,4 +1,6 @@
+#include <iostream>
 #include "../include/exchange_table.h"
+
 
 /*-----------------------------------------------------------------------------
  * PUBLIC METHODS
@@ -15,6 +17,17 @@ Exchange_table::Exchange_table()
  */
 Exchange_table::Exchange_table(const int L, const int dim)
 {
+    size = L * L;
+
+    switch(dim) {
+        case 2: n_neigh = 2;
+        case 3: n_neigh = 2;
+        default: std::cout << "Error: Expected dim to be 2 or 3\n";
+                 exit(EXIT_FAILURE);
+    } // Switch based on dimension
+
+    neigh.init(L, dim);
+    table.reserve(size * n_neigh);
 }
 
 
@@ -25,6 +38,17 @@ Exchange_table::Exchange_table(const int L, const int dim)
  */
 void Exchange_table::init(const int L, const int dim)
 {
+    size = L * L;
+
+    switch(dim) {
+        case 2: n_neigh = 2;
+        case 3: n_neigh = 2;
+        default: std::cout << "Error: Expected dim to be 2 or 3\n";
+                 exit(EXIT_FAILURE);
+    } // Switch based on dimension
+
+    neigh.init(L, dim);
+    table.reserve(size * n_neigh);
 }
 
 
