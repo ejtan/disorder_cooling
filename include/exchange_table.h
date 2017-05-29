@@ -22,7 +22,7 @@ class Exchange_table
     private:
         int size, n_neigh;
         Neighbor_table neigh;
-        std::vector<double> J;
+        std::vector<double> table;
 
     public:
         Exchange_table();
