@@ -96,6 +96,31 @@ void Exchange_table::generate_discrete(const double J, const double prob)
  */
 void Exchange_table::generate_continuous(const double delta)
 {
+    std::uniform_real_distribution<float> rand0(0.0, 1.0);
+    std::random_device rd;
+    std::mt19937 engine(rd());
+    double r, r_val , J_val;
+
+    for (size_t i = 0; i < size; i++) {
+        // 0 - 2 bond
+        r = rand0(engine);
+        r_val = rand0(engine);
+        if (r > 0.5) J_val = 1.0 - (delta * r_val / 2.0);
+        else         J_val = 1.0 - (delta * r_val / 2.0);
+        table[i * n_neigh] = J_val;
+        table[neigh[i * n_neigh] * n_neigh + 2] = J_val;
+
+        // 1 - 3 bond
+        r = rand0(engine);
+        r_val = rand0(engine);
+        if (r > 0.5) J_val = 1.0 - (delta * r_val / 2.0);
+        else         J_val = 1.0 - (delta * r_val / 2.0);
+        table[i * n_neigh + 1] = J_val;
+        table[neigh[i * n_neigh + 1] * n_neigh + 3] = J_val;
+
+        // 4 - 5 bond for 3D
+        // Implament when 3D neighbor table is implamented
+    } // Loop to set exchange table
 }
 
 
