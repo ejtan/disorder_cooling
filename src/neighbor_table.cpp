@@ -1,3 +1,4 @@
+#include <iostream>
 #include "../include/neighbor_table.h"
 
 
@@ -35,6 +36,21 @@ Neighbor_table::Neighbor_table()
  */
 Neighbor_table::Neighbor_table(const int L, const int dim)
 {
+    size = L * L;
+
+    if (dim == 2) {
+        n_neigh = 4;
+        table.reserve(size * n_neigh);
+        set_2D_table(L);
+    } else if (dim == 3) {
+        n_neigh = 6;
+        table.reserve(size * n_neigh);
+        set_3D_table(L);
+    } else {
+        std::cerr << "Error: Expected neighbor table dimension to be 2 or 3\n"
+            << "Exiting Program." << std::endl;
+        exit(EXIT_FAILURE);
+    } // Perform check based on dimension input.
 }
 
 
@@ -43,6 +59,21 @@ Neighbor_table::Neighbor_table(const int L, const int dim)
  */
 void Neighbor_table::init(const int L, const int dim)
 {
+    size = L * L;
+
+    if (dim == 2) {
+        n_neigh = 4;
+        table.reserve(size * n_neigh);
+        set_2D_table(L);
+    } else if (dim == 3) {
+        n_neigh = 6;
+        table.reserve(size * n_neigh);
+        set_3D_table(L);
+    } else {
+        std::cerr << "Error: Expected neighbor table dimension to be 2 or 3\n"
+            << "Exiting Program." << std::endl;
+        exit(EXIT_FAILURE);
+    } // Perform check based on dimension input.
 }
 
 
