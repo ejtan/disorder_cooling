@@ -130,6 +130,7 @@ void Exchange_table::generate_continuous(const double delta)
  */
 double Exchange_table::operator[](const int idx) const
 {
+    return table[idx];
 }
 
 
@@ -139,4 +140,5 @@ double Exchange_table::operator[](const int idx) const
  */
 std::vector<double> Exchange_table::get_table()
 {
+    return table;
 }
