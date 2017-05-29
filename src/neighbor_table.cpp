@@ -107,6 +107,7 @@ void Neighbor_table::init(const int L, const int dim)
  */
 int Neighbor_table::operator[](const int idx)
 {
+    return table[idx];
 }
 
 
@@ -115,4 +116,5 @@ int Neighbor_table::operator[](const int idx)
  */
 std::vector<int> Neighbor_table::get_table()
 {
+    return table;
 }
