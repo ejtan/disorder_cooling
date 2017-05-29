@@ -105,7 +105,7 @@ void Neighbor_table::init(const int L, const int dim)
 /* operator[]
  * Returns the input index of the array.
  */
-int Neighbor_table::operator[](const int idx)
+int Neighbor_table::operator[](const int idx) const
 {
     return table[idx];
 }

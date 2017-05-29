@@ -34,7 +34,7 @@ class Neighbor_table
         Neighbor_table();
         Neighbor_table(const int L, const int dim);
         void init(const int L, const int dim);
-        int operator[](const int idx);
+        int operator[](const int idx) const;
         std::vector<int> get_table();
 };
 
