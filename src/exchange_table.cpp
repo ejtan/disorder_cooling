@@ -1,4 +1,5 @@
 #include <iostream>
+#include <random>
 #include "../include/exchange_table.h"
 
 
@@ -58,6 +59,34 @@ void Exchange_table::init(const int L, const int dim)
  */
 void Exchange_table::generate_discrete(const double J, const double prob)
 {
+    if (prob > 1 || prob < 0) {
+        std::cerr << "Error: Expected p to be between 0 and 1" << std::endl;
+        exit(EXIT_FAILURE);
+    } // Check if p is between 0 and 1
+
+    std::uniform_real_distribution<float> rand0(0.0, 1.0);
+    std::random_device rd;
+    std::mt19937 engine(rd());
+    double r, J_val;
+
+    for (size_t i = 0; i < size; i++) {
+        // 0 - 2 bond
+        r = rand0(engine);
+        if (r < prob) J_val = J;
+        else          J_val = -J;
+        table[i * n_neigh] = J_val;
+        table[neigh[i * n_neigh] * n_neigh + 2] = J_val;
+
+        // 1 - 3 bond
+        r = rand0(engine);
+        if (r < prob) J_val = J;
+        else          J_val = -J;
+        table[i * n_neigh + 1] = J_val;
+        table[neigh[i * n_neigh + 1] * n_neigh + 3] = J_val;
+
+        // 4 - 5 bond for 3D
+        // Implament when 3D neighbor table is implamented
+    } // Loop to set exchange table
 }
 
 
