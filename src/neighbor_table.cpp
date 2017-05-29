@@ -9,8 +9,33 @@
 /* set_2D_table()
  * Sets the neighbor table as a 2D square lattice.
  */
-void set_2D_table(const int L)
+void Neighbor_table::set_2D_table(const int L)
 {
+    for (size_t i = 0; i < size; i++) {
+        // 0-th neighbor
+        if (i - L < 0)
+            table[i * n_neigh] = i + size - L;
+        else
+            table[i * n_neigh] = i - L;
+
+        // 1-st neighbor
+        if ((i + 1) % L == 0)
+            table[i * n_neigh + 1] = i + 1 - L;
+        else
+            table[i * n_neigh + 1] = i + 1;
+
+        // 2-nd neighbor
+        if (i + L >= size)
+            table[i * 4 + 2] = i + L - size;
+        else
+            table[i * 4 + 2] = i + L;
+
+        // 3-rd neighbor
+        if (i % L == 0)
+            table[i * 4 + 3] = i + L - 1;
+        else
+            table[i * 4 + 3] = i - 1;
+    } // Loop to set table
 }
 
 
