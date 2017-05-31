@@ -113,13 +113,3 @@ int Neighbor_table::operator[](const int idx) const
 {
     return table[idx];
 }
-
-
-/* get_table()
- *
- * Outputs the neighbor table vector.
- */
-std::vector<int> Neighbor_table::get_table()
-{
-    return table;
-}
