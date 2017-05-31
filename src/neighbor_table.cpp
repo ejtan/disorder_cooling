@@ -125,3 +125,19 @@ int Neighbor_table::operator[](const int idx) const
 {
     return table[idx];
 }
+
+
+/* interator begin()
+ */
+std::vector<int>::iterator Neighbor_table::begin()
+{
+    return table.begin();
+}
+
+
+/* interator end()
+ */
+std::vector<int>::iterator Neighbor_table::end()
+{
+    return table.end();
+}

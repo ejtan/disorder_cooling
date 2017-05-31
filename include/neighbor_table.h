@@ -36,7 +36,8 @@ class Neighbor_table
         void init(const int L, const int dim);
         size_t size() const;
         int operator[](const int idx) const;
+        std::vector<int>::iterator begin();
+        std::vector<int>::iterator end();
 };
-
 
 #endif
