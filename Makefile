@@ -12,3 +12,5 @@ neighbor_table.o: src/neighbor_table.cpp include/neighbor_table.h
 test_neigh.o: test/test_neigh.cpp
 	$(CC) $(WARN) $(CFLAGS) -c test/test_neigh.cpp
 
+clean:
+	rm -Rf *.out *.o
