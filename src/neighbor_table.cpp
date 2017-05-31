@@ -109,10 +109,11 @@ void Neighbor_table::init(const int L, const int dim)
  *
  * Returns the size of the neighbor table. This outputs the number of elements
  * stored in the table.
+ * NOTE: For whatever reason, table.size() returns 0, so return N * n_neigh
  */
-int Neighbor_table::size() const
+size_t Neighbor_table::size() const
 {
-    return table.size();
+    return N * n_neigh;
 }
 
 
