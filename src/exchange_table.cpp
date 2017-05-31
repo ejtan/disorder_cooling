@@ -132,13 +132,3 @@ double Exchange_table::operator[](const int idx) const
 {
     return table[idx];
 }
-
-
-/* get_table()
- *
- * Simply outputs the table stored as a vector.
- */
-std::vector<double> Exchange_table::get_table()
-{
-    return table;
-}

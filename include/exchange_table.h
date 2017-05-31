@@ -31,7 +31,6 @@ class Exchange_table
         void generate_discrete(const double J, const double prob);
         void generate_continuous(const double delta);
         double operator[](const int idx) const;
-        std::vector<double> get_table();
 };
 
 #endif
