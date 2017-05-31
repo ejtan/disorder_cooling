@@ -12,7 +12,7 @@
  */
 void Neighbor_table::set_2D_table(const int L)
 {
-    for (size_t i = 0; i < size; i++) {
+    for (int i = 0; i < size; i++) {
         // 0-th neighbor
         if (i - L < 0)
             table[i * n_neigh] = i + size - L;
@@ -44,7 +44,7 @@ void Neighbor_table::set_2D_table(const int L)
  *
  * Sets the neighbor table as a 3D square lattice.
  */
-void set_3D_table(const int L)
+void Neighbor_table::set_3D_table(const int L)
 {
 }
 
