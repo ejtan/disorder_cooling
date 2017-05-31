@@ -1,23 +1,14 @@
-CC := g++
-SRCDIR := src
-BUILDDIR := build
-TARGET := bin/disorder_cooling
+CC = g++
+CFLAGS = -pipe -O2 -std=c++14 -march=native
+WARN = -Wall -Werror -Wfloat-equal -ansi -pedantic
+OBJ = exchange_table.o neighbor_table.o
 
-SRCEXT := cpp
-SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
-OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
-CFLAGS := -g
-LIB := -fopenmp
-INC := -I include
+test_neigh.out: neighbor_table.o test_neigh.o
+	$(CC) $(WARN) $(CFLAGS) neighbor_table.o test_neigh.o -o test_neigh.out
 
-$(TARGET): $(OBJECTS)
-	@echo " Linking..."
-	@echo " $(CC) $^ -o $(TARGET) $(LIB)"; $(CC) $^ -o $(TARGET) $(LIB)
+neighbor_table.o: src/neighbor_table.cpp include/neighbor_table.h
+	$(CC) $(WARN) $(CFLAGS) -c src/neighbor_table.cpp
 
-$(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
-	@mkdir -p $(BUILDDIR)
-	@echo " $(CC) $(CFLAGS) $(INC) -c -o $@ $<"; $(CC) $(CFLAGS) $(INC) -c -o $@ $<
+test_neigh.o: test/test_neigh.cpp
+	$(CC) $(WARN) $(CFLAGS) -c test/test_neigh.cpp
 
-clean:
-	@echo " Cleaning...";
-	@echo " $(RM) -r $(BUILDDIR) $(TARGET)"; $(RM) -r $(BUILDDIR) $(TARGET)
