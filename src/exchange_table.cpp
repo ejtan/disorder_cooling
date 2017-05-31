@@ -22,7 +22,7 @@ Exchange_table::Exchange_table(const int L, const int dim)
 
     switch(dim) {
         case 2: n_neigh = 2;
-        case 3: n_neigh = 2;
+        case 3: n_neigh = 3;
         default: std::cout << "Error: Expected dim to be 2 or 3\n";
                  exit(EXIT_FAILURE);
     } // Switch based on dimension
@@ -43,7 +43,7 @@ void Exchange_table::init(const int L, const int dim)
 
     switch(dim) {
         case 2: n_neigh = 2;
-        case 3: n_neigh = 2;
+        case 3: n_neigh = 3;
         default: std::cout << "Error: Expected dim to be 2 or 3\n";
                  exit(EXIT_FAILURE);
     } // Switch based on dimension
@@ -69,7 +69,7 @@ void Exchange_table::generate_discrete(const double J, const double prob)
     std::mt19937 engine(rd());
     double r, J_val;
 
-    for (size_t i = 0; i < size; i++) {
+    for (int i = 0; i < size; i++) {
         // 0 - 2 bond
         r = rand0(engine);
         if (r < prob) J_val = J;
@@ -101,7 +101,7 @@ void Exchange_table::generate_continuous(const double delta)
     std::mt19937 engine(rd());
     double r, r_val , J_val;
 
-    for (size_t i = 0; i < size; i++) {
+    for (int i = 0; i < size; i++) {
         // 0 - 2 bond
         r = rand0(engine);
         r_val = rand0(engine);

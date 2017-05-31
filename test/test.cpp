@@ -9,6 +9,8 @@
 #include <vector>
 #include <algorithm>
 #include "../include/neighbor_table.h"
+#include "../include/exchange_table.h"
+
 
 /* test_neighbor()
  *
@@ -29,7 +31,7 @@ void test_neighbor()
         exit(EXIT_FAILURE);
     } // Check if both tables are the same size
 
-    std::cout << "Testing if generated neighbor table is correct...\n\n";
+    std::cout << "Testing if generated neighbor table is correct... ";
 
     // Check if site table are equal
     if (std::equal(actual_2D.begin(), actual_2D.end(), neigh.begin()))
@@ -38,8 +40,10 @@ void test_neighbor()
         std::cout << "2D Neighbor Table Test Failed.\n";
 }
 
+
 int main(void)
 {
+    std::cout << "Performing Tests\n\n";
     test_neighbor();
 
     return 0;
