@@ -25,7 +25,7 @@
 class Neighbor_table
 {
     private:
-        int size, n_neigh;
+        int N, n_neigh;
         std::vector<int> table;
         void set_2D_table(const int L);
         void set_3D_table(const int L);
@@ -34,6 +34,7 @@ class Neighbor_table
         Neighbor_table();
         Neighbor_table(const int L, const int dim);
         void init(const int L, const int dim);
+        int size() const;
         int operator[](const int idx) const;
 };
 

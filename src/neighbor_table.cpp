@@ -12,10 +12,10 @@
  */
 void Neighbor_table::set_2D_table(const int L)
 {
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < N; i++) {
         // 0-th neighbor
         if (i - L < 0)
-            table[i * n_neigh] = i + size - L;
+            table[i * n_neigh] = i + N - L;
         else
             table[i * n_neigh] = i - L;
 
@@ -26,8 +26,8 @@ void Neighbor_table::set_2D_table(const int L)
             table[i * n_neigh + 1] = i + 1;
 
         // 2-nd neighbor
-        if (i + L >= size)
-            table[i * 4 + 2] = i + L - size;
+        if (i + L >= N)
+            table[i * 4 + 2] = i + L - N;
         else
             table[i * 4 + 2] = i + L;
 
@@ -63,15 +63,15 @@ Neighbor_table::Neighbor_table()
  */
 Neighbor_table::Neighbor_table(const int L, const int dim)
 {
-    size = L * L;
+    N = L * L;
 
     if (dim == 2) {
         n_neigh = 4;
-        table.reserve(size * n_neigh);
+        table.reserve(N * n_neigh);
         set_2D_table(L);
     } else if (dim == 3) {
         n_neigh = 6;
-        table.reserve(size * n_neigh);
+        table.reserve(N * n_neigh);
         set_3D_table(L);
     } else {
         std::cerr << "Error: Expected neighbor table dimension to be 2 or 3\n"
@@ -87,21 +87,32 @@ Neighbor_table::Neighbor_table(const int L, const int dim)
  */
 void Neighbor_table::init(const int L, const int dim)
 {
-    size = L * L;
+    N = L * L;
 
     if (dim == 2) {
         n_neigh = 4;
-        table.reserve(size * n_neigh);
+        table.reserve(N * n_neigh);
         set_2D_table(L);
     } else if (dim == 3) {
         n_neigh = 6;
-        table.reserve(size * n_neigh);
+        table.reserve(N * n_neigh);
         set_3D_table(L);
     } else {
         std::cerr << "Error: Expected neighbor table dimension to be 2 or 3\n"
             << "Exiting Program." << std::endl;
         exit(EXIT_FAILURE);
     } // Perform check based on dimension input.
+}
+
+
+/* size()
+ *
+ * Returns the size of the neighbor table. This outputs the number of elements
+ * stored in the table.
+ */
+int Neighbor_table::size() const
+{
+    return table.size();
 }
 
 
