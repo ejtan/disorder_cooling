@@ -21,8 +21,8 @@ Exchange_table::Exchange_table(const int L, const int dim)
     size = L * L;
 
     switch(dim) {
-        case 2: n_neigh = 2; break;
-        case 3: n_neigh = 3; break;
+        case 2: n_neigh = 4; break;
+        case 3: n_neigh = 6; break;
         default: std::cout << "Error: Expected dim to be 2 or 3\n";
                  exit(EXIT_FAILURE);
     } // Switch based on dimension
@@ -42,8 +42,8 @@ void Exchange_table::init(const int L, const int dim)
     size = L * L;
 
     switch(dim) {
-        case 2: n_neigh = 2; break;
-        case 3: n_neigh = 3; break;
+        case 2: n_neigh = 4; break;
+        case 3: n_neigh = 6; break;
         default: std::cout << "Error: Expected dim to be 2 or 3\n";
                  exit(EXIT_FAILURE);
     } // Switch based on dimension
