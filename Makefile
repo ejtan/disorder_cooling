@@ -1,20 +1,33 @@
-CC = g++
-CFLAGS = -pipe -O2 -std=c++14 -march=native
-WARN = -Wall -Werror -Wfloat-equal -ansi -pedantic
-OBJ = exchange_table.o neighbor_table.o
+# Makefile template from
+# http://hiltmon.com/blog/2013/07/03/a-simple-c-plus-plus-project-structure/
 
+CC := g++
+SRCDIR := src
+BUILDDIR := build
+TARGET := bin/disorder_cooling
 
-test.out: neighbor_table.o exchange_table.o test.o
-	$(CC) $(WARN) $(CFLAGS) neighbor_table.o exchange_table.o test.o -o bin/test.out
+SRCEXT := cpp
+SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
+OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
+WARNING := -Wall -Werror -Wextra -Wfloat-equal -ansi -pedantic
+CFLAGS := -pipe -O2 -std=c++14 -march=native -mtune=native -flto -funroll-loops \
+	-finline-functions -fno-stack-protector -ftree-vectorize
+LIB := -fopenmp
+INC := -I include
 
-neighbor_table.o: src/neighbor_table.cpp include/neighbor_table.h
-	$(CC) $(WARN) $(CFLAGS) -c src/neighbor_table.cpp
+$(TARGET): $(OBJECTS)
+	@echo " Linking..."
+	@echo " $(CC) $^ -o $(TARGET) $(LIB)"; $(CC) $^ -o $(TARGET) $(LIB)
 
-exchange_table.o: src/exchange_table.cpp include/exchange_table.h
-	$(CC) $(WARN) $(CFLAGS) -c src/exchange_table.cpp
-
-test.o: test/test.cpp
-	$(CC) $(WARN) $(CFLAGS) -c test/test.cpp
+$(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
+	@mkdir -p $(BUILDDIR)
+	@echo " $(CC) $(CFLAGS) $(INC) -c -o $@ $<"; $(CC) $(CFLAGS) $(INC) -c -o $@ $<
 
 clean:
-	rm -Rf *.o
+	@echo " Cleaning..."
+	@echo " $(RM) -r $(BUILDDIR) $(TARGET)"; $(RM) -r $(BUILDDIR) $(TARGET)
+
+test:
+	$(CC) $(CFLAGS) test/test.cpp $(INC) $(LIB) -o bin/test
+
+.PHONY: clean
