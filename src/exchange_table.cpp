@@ -1,5 +1,6 @@
 #include <iostream>
 #include <random>
+#include <algorithm>
 #include "../include/exchange_table.h"
 
 
@@ -50,6 +51,16 @@ void Exchange_table::init(const int L, const int dim)
 
     neigh.init(L, dim);
     table.reserve(size * n_neigh);
+}
+
+
+/* generate_clean()
+ *
+ * Sets the entire table to 1. Used for clean systems where J = 1.
+ */
+void Exchange_table::generate_clean()
+{
+    std::fill(table.begin(), table.end(), 1.0);
 }
 
 
