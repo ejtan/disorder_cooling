@@ -1,9 +1,28 @@
-#include "../include/model.h"
+#ifndef MODEL_H
+#define MODEL_H
+
+#include <vector>
+#include <random>
+#include "neighbor_table.h"
+#include "exchange_table.h"
 
 
-/* Default Constructor
+/* Base class for Classical spin models.
  */
-Model::Model()
+class Model
 {
-}
+    private:
+        int size;
+        std::vector<int> spin;
+        Neighbor_table neigh;
+        Exchange_table J;
 
+    public:
+        Model();
+        Model(const int L);
+        void init(const int L);
+        virtual void set_spin() = 0;
+        virtual double sweep_energy() = 0;
+};
+
+#endif

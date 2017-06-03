@@ -1,23 +1,25 @@
-#ifndef MODEL_H
-#define MODEL_H
+#include "../include/model.h"
 
-#include <vector>
-#include <random>
-#include "neighbor_table.h"
-#include "exchange_table.h"
 
-/* Base class for Classical spin models.
+/* Default Constructor
  */
-class Model
+Model::Model()
 {
-    private:
-        int size;
-        std::vector<int> spin;
-        Neighbor_table neigh;
-        Exchange_table J;
+}
 
-    public:
-        Model();
-};
 
-#endif
+/* Constructor with arguments.
+ */
+Model::Model(const int L)
+{
+}
+
+
+
+/* init()
+ *
+ * Behaves just as the constructor with arguments.
+ */
+void Model::init(const int L)
+{
+}
