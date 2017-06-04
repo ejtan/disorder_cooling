@@ -19,8 +19,8 @@ class Model
 
     public:
         Model();
-        Model(const int L);
-        void init(const int L);
+        Model(const int L, const int dim);
+        void init(const int L, const int dim);
         virtual void set_spin() = 0;
         virtual double sweep_energy() = 0;
 };

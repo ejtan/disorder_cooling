@@ -10,16 +10,23 @@ Model::Model()
 
 /* Constructor with arguments.
  */
-Model::Model(const int L)
+Model::Model(const int L, const int dim)
 {
+    size = L * L;
+    neigh.init(L, dim);
+    J.init(L, dim);
+    spin.reserve(size);
 }
-
 
 
 /* init()
  *
  * Behaves just as the constructor with arguments.
  */
-void Model::init(const int L)
+void Model::init(const int L, const int dim)
 {
+    size = L * L;
+    neigh.init(L, dim);
+    J.init(L, dim);
+    spin.reserve(size);
 }
