@@ -12,6 +12,7 @@ Ising::Ising() : rand0(0.0, 1.0)
  */
 Ising::Ising(const int L, const int dim) : Model(L, dim), rand0(0.0, 1.0)
 {
+    spin.reserve(size * n_neigh);
 }
 
 
@@ -21,6 +22,8 @@ Ising::Ising(const int L, const int dim) : Model(L, dim), rand0(0.0, 1.0)
  */
 void Ising::init(const int L, const int dim)
 {
+    Model::init(L, dim);
+    spin.reserve(size * n_neigh);
 }
 
 

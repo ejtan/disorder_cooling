@@ -15,6 +15,7 @@ class Ising : public Model
         static const int warmup  = 30000;
         static const int measure = 500000;
         std::uniform_real_distribution<float> rand0;
+        std::vector<int> spin;
     public:
         Ising();
         Ising(const int L, const int dim);
