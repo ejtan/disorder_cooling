@@ -12,10 +12,12 @@
 class Model
 {
     private:
-        int size;
-        std::vector<int> spin;
-        Neighbor_table neigh;
         Exchange_table J;
+        std::vector<int> spin;
+
+    protected:
+        int size;
+        Neighbor_table neigh;
 
     public:
         Model();
