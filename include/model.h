@@ -11,13 +11,10 @@
  */
 class Model
 {
-    private:
-        Exchange_table J;
-        std::vector<int> spin;
-
     protected:
         int size;
         Neighbor_table neigh;
+        Exchange_table J;
 
     public:
         Model();
