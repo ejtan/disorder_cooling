@@ -12,7 +12,7 @@
 class Model
 {
     protected:
-        int size;
+        int size, n_neigh;
         Neighbor_table neigh;
         Exchange_table J;
 
