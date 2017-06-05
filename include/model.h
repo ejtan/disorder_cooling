@@ -21,7 +21,7 @@ class Model
         Model(const int L, const int dim);
         void init(const int L, const int dim);
         virtual void set_spin() = 0;
-        virtual double sweep_energy() = 0;
+        virtual double sweep_energy(const double beta, std::mt19937 &engine) = 0;
 };
 
 #endif
