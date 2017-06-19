@@ -3,9 +3,9 @@
 #include "../include/ising.h"
 
 
-/*-----------------------------------------------------------------------------
+/*-------------------------------------------------------------------------------------------------
  * PRIVATE METHODS
- *---------------------------------------------------------------------------*/
+ *-----------------------------------------------------------------------------------------------*/
 void Ising::sweep_lattice(const double beta, std::mt19937 &engine)
 {
     int pos;
@@ -27,9 +27,9 @@ void Ising::sweep_lattice(const double beta, std::mt19937 &engine)
 }
 
 
-/*-----------------------------------------------------------------------------
+/*-------------------------------------------------------------------------------------------------
  * PUBLIC METHODS
- *---------------------------------------------------------------------------*/
+ *-----------------------------------------------------------------------------------------------*/
 
 /* Default Constructor
  */
@@ -40,7 +40,7 @@ Ising::Ising() : rand0(0.0, 1.0)
 
 /* Constructor with Initalizer list
  */
-Ising::Ising(const int L, const int dim) : Model(L, dim), rand0(0.0, 1.0)
+Ising::Ising(const int _L, const int _dim) : Model(_L, _dim), rand0(0.0, 1.0)
 {
     spin.reserve(size);
 }
@@ -50,9 +50,9 @@ Ising::Ising(const int L, const int dim) : Model(L, dim), rand0(0.0, 1.0)
  *
  * Same as constructor with initalizer list
  */
-void Ising::init(const int L, const int dim)
+void Ising::init(const int _L, const int _dim)
 {
-    Model::init(L, dim);
+    Model::init(_L, _dim);
     spin.reserve(size);
 }
 
@@ -63,13 +63,28 @@ void Ising::init(const int L, const int dim)
  */
 void Ising::set_spin()
 {
-    if (size) {
-        for (int i = 0; i < size; i++)
-            spin[i] = 1;
-    } else {
-        std::cerr << "Ising class is not initalized" << std::endl;
-        exit(EXIT_FAILURE);
-    } // Check if Class is initalized
+    for (int i = 0; i < size; i++)
+        spin[i] = 1;
+}
+
+
+/* set_exchange()
+ *
+ * Sets exchange table with mean of 1.
+ */
+void Ising::set_exchange(const double delta)
+{
+    J.generate_continuous(delta);
+}
+
+
+/* set_exchange()
+ *
+ * Sets exchange table with discrete probability
+ */
+void Ising::set_exchange(const double J_val, const double p)
+{
+    J.generate_discrete(J_val, p);
 }
 
 
@@ -88,9 +103,8 @@ double Ising::sweep_energy(const double beta, std::mt19937 &engine)
         sweep_lattice(beta, engine);
 
         for (int j = 0; j < size; j++) {
-            E_tot += -((J[j * n_neigh] * spin[j] * spin[neigh[j * n_neigh]]) +
-                       (J[j * n_neigh + 1] * spin[j] *
-                        spin[neigh[j * n_neigh + 1]]));
+            E_tot += -((J[j * n_neigh]     * spin[j] * spin[neigh[j * n_neigh]]) +
+                       (J[j * n_neigh + 1] * spin[j] * spin[neigh[j * n_neigh + 1]]));
         } // Compute energy using 0 and 1 bonds.
     } // Perform measurement sweeps
 
