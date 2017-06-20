@@ -1,5 +1,4 @@
 #include <cmath>
-
 #include "../include/clock.h"
 
 
@@ -92,17 +91,9 @@ double Clock::calculate_totalE()
  * PUBLIC METHODS
  *----------------------------------------------------------------------------------------------*/
 
-/* Default Constructor
- */
-Clock::Clock() : rand0(0.0, 1.0)
-{
-}
-
-
 /* Constructor with Initalizer list
  */
-Clock::Clock(const int _L, const int _dim, const int _n_spin, const int _q) :
-    Model(_L, _dim), rand0(0.0, 1.0), q(_q)
+Clock::Clock(const int L, const int dim, const int _q) : Model(L, dim), q(_q)
 {
     spin.reserve(size);
     cos_val.reserve(_q);
@@ -118,11 +109,11 @@ Clock::Clock(const int _L, const int _dim, const int _n_spin, const int _q) :
  *
  * Same as constructor with initalizer list
  */
-void Clock::init(const int _L, const int _dim, const int _n_spin, const int _q)
+void Clock::init(const int L, const int dim, const int _q)
 {
     q = _q;
 
-    Model::init(_L, _dim);
+    Model::init(L, dim);
     spin.reserve(size);
     cos_val.reserve(_q);
 
@@ -153,7 +144,7 @@ void Clock::set_spin()
  */
 void Clock::set_exchange(const double delta)
 {
-    J.generate_continuous(delta);
+    Model::set_exchange(delta);
 }
 
 
@@ -163,7 +154,7 @@ void Clock::set_exchange(const double delta)
  */
 void Clock::set_exchange(const double J_val, const double p)
 {
-    J.generate_discrete(J_val, p);
+    Model::set_exchange(J_val, p);
 }
 
 

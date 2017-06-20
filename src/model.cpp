@@ -8,14 +8,14 @@
 
 /* Default Constructor
  */
-Model::Model()
+Model::Model() : rand0(0.0, 1.0)
 {
 }
 
 
 /* Constructor with arguments.
  */
-Model::Model(const int L, const int dim)
+Model::Model(const int L, const int dim) : rand0(0.0, 1.0)
 {
     switch(dim) {
         case 2: n_neigh = 4; break;
@@ -48,4 +48,24 @@ void Model::init(const int L, const int dim)
     neigh.init(L, dim);
     J.init(L, dim);
     J.generate_clean();
+}
+
+
+/* generate_exchange()
+ *
+ * Sets exchange table with a continuous distribution centered at 1.
+ */
+void Model::set_exchange(const double delta)
+{
+    J.generate_continuous(delta);
+}
+
+
+/* generate_exchange()
+ *
+ * Sets exchange table with a continuous distribution centered at 1.
+ */
+void Model::set_exchange(const double J_val, const double p)
+{
+    J.generate_discrete(J_val, p);
 }

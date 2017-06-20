@@ -12,15 +12,12 @@
 class XY : public Clock
 {
     private:
-        std::uniform_real_distribution<float> rand0;
         std::vector<int> spin;
-
-        void sweep_lattice(const double beta, std::mt19937 &engine);
 
     public:
         XY();
-        XY(const int _L, const int _dim);
-        void init(const int _L, const int _dim);
+        XY(const int L, const int dim);
+        void init(const int L, const int dim);
         void set_spin();
         void set_exchange(const double delta);
         void set_exchange(const double J_val, const double p);

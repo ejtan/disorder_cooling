@@ -5,16 +5,9 @@
  * PRIVATE METHODS
  *-----------------------------------------------------------------------------------------------*/
 
-/* Constructor
- */
-XY::XY() : rand0(0.0, 1.0)
-{
-}
-
-
 /* Constructor with initalizer list
  */
-XY::XY(const int _L, const int _dim) : Clock(_L, _dim, 50, 50), rand0(0.0, 1.0)
+XY::XY(const int L, const int dim) : Clock(L, dim, 50)
 {
 }
 
@@ -23,9 +16,9 @@ XY::XY(const int _L, const int _dim) : Clock(_L, _dim, 50, 50), rand0(0.0, 1.0)
  *
  * Same as constructor with initalizer list
  */
-void XY::init(const int _L, const int _dim)
+void XY::init(const int L, const int dim)
 {
-    Clock::init(_L, _dim, 50, 50);
+    Clock::init(L, dim, 50);
 }
 
 
@@ -45,7 +38,7 @@ void XY::set_spin()
  */
 void XY::set_exchange(const double delta)
 {
-    J.generate_continuous(delta);
+    Model::set_exchange(delta);
 }
 
 
@@ -55,7 +48,7 @@ void XY::set_exchange(const double delta)
  */
 void XY::set_exchange(const double J_val, const double p)
 {
-    J.generate_discrete(J_val, p);
+    Model::set_exchange(J_val, p);
 }
 
 

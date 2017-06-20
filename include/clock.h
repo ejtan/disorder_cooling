@@ -14,8 +14,7 @@
 class Clock : public Model
 {
     private:
-        int n_spin, q;
-        std::uniform_real_distribution<float> rand0;
+        int q;
         std::vector<int> spin;
         std::vector<double> cos_val;
 
@@ -24,9 +23,8 @@ class Clock : public Model
         double calculate_totalE();
 
     public:
-        Clock();
-        Clock(const int _L, const int _dim, const int _n_spin, const int _q);
-        void init(const int _L, const int _dim, const int _n_spin, const int _q);
+        Clock(const int L, const int dim, const int _q);
+        void init(const int L, const int dim, const int _q);
         void set_spin();
         void set_exchange(const double delta);
         void set_exchange(const double J_val, const double p);

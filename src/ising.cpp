@@ -31,16 +31,9 @@ void Ising::sweep_lattice(const double beta, std::mt19937 &engine)
  * PUBLIC METHODS
  *-----------------------------------------------------------------------------------------------*/
 
-/* Default Constructor
- */
-Ising::Ising() : rand0(0.0, 1.0)
-{
-}
-
-
 /* Constructor with Initalizer list
  */
-Ising::Ising(const int _L, const int _dim) : Model(_L, _dim), rand0(0.0, 1.0)
+Ising::Ising(const int L, const int dim) : Model(L, dim)
 {
     spin.reserve(size);
 }
@@ -50,9 +43,9 @@ Ising::Ising(const int _L, const int _dim) : Model(_L, _dim), rand0(0.0, 1.0)
  *
  * Same as constructor with initalizer list
  */
-void Ising::init(const int _L, const int _dim)
+void Ising::init(const int L, const int dim)
 {
-    Model::init(_L, _dim);
+    Model::init(L, dim);
     spin.reserve(size);
 }
 
@@ -74,7 +67,7 @@ void Ising::set_spin()
  */
 void Ising::set_exchange(const double delta)
 {
-    J.generate_continuous(delta);
+    Model::set_exchange(delta);
 }
 
 
@@ -84,7 +77,7 @@ void Ising::set_exchange(const double delta)
  */
 void Ising::set_exchange(const double J_val, const double p)
 {
-    J.generate_discrete(J_val, p);
+    Model::set_exchange(J_val, p);
 }
 
 
