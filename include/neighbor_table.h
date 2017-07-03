@@ -32,6 +32,7 @@ class Neighbor_table
 
     public:
         Neighbor_table();
+        Neighbor_table(const Neighbor_table &rhs);
         Neighbor_table(const int L, const int dim);
         void init(const int L, const int dim);
         size_t size() const;

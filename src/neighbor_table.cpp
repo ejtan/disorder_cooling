@@ -59,6 +59,15 @@ Neighbor_table::Neighbor_table()
 }
 
 
+/* copy constructor
+ */
+Neighbor_table::Neighbor_table(const Neighbor_table &rhs) :
+    N(rhs.N), n_neigh(rhs.n_neigh), table(rhs.table)
+{
+}
+
+
+
 /* Constructor with initalizer list.
  */
 Neighbor_table::Neighbor_table(const int L, const int dim)
