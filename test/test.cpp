@@ -40,6 +40,16 @@ void test_neighbor()
         std::cout << "2D Neighbor Table Test Passed.\n";
     else
         std::cout << "2D Neighbor Table Test Failed.\n";
+
+    // Test copy constructor
+    Neighbor_table other(neigh);
+    std::cout << "Testing if copy constructor table is correct...   ";
+    if (std::equal(actual_2D.begin(), actual_2D.end(), other.begin()))
+        std::cout << "2D Neighbor Table Test Passed.\n";
+    else
+        std::cout << "2D Neighbor Table Test Failed.\n";
+
+    std::cout << std::endl;
 }
 
 
