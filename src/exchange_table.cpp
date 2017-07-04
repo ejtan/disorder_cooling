@@ -14,6 +14,13 @@ Exchange_table::Exchange_table()
 }
 
 
+/* Copy constructor
+ */
+Exchange_table::Exchange_table(const Exchange_table &rhs) :
+    size(rhs.size), n_neigh(rhs.n_neigh), neigh(rhs.neigh), table(rhs.table)
+{
+}
+
 /* Constructor with initalizer list
  */
 Exchange_table::Exchange_table(const int L, const int dim)

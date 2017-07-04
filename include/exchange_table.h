@@ -26,6 +26,7 @@ class Exchange_table
 
     public:
         Exchange_table();
+        Exchange_table(const Exchange_table &rhs);
         Exchange_table(const int L, const int dim);
         void init(const int L, const int dim);
         void generate_discrete(const double J, const double prob);
