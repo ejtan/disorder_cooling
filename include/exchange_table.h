@@ -28,7 +28,6 @@ class Exchange_table
         Exchange_table();
         Exchange_table(const int L, const int dim);
         void init(const int L, const int dim);
-        void generate_clean();
         void generate_discrete(const double J, const double prob);
         void generate_continuous(const double delta);
         double operator[](const int idx) const;
