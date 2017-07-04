@@ -9,7 +9,7 @@
  *
  * Table which set the exchange bond between neighboring sites.
  * Utilizes a neighbor table to set the values. Can take both discrete and
- * continuous distrubitons.
+ * continuous distrubitons. Table initally sets all values to 1 (clean system).
  *
  * If discrete, than +/- J values are set with probability p for +j and (1-p)
  * for -J.
