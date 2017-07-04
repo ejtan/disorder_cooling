@@ -27,7 +27,6 @@ Model::Model(const int L, const int dim) : rand0(0.0, 1.0)
     size = L * L;
     neigh.init(L, dim);
     J.init(L, dim);
-    J.generate_clean();
 }
 
 
@@ -47,7 +46,6 @@ void Model::init(const int L, const int dim)
     size = L * L;
     neigh.init(L, dim);
     J.init(L, dim);
-    J.generate_clean();
 }
 
 
