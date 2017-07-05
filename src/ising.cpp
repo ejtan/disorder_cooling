@@ -1,6 +1,8 @@
 #include <iostream>
 #include <boost/simd/exponential.hpp>
 #include <boost/simd/function/multiplies.hpp>
+#include <boost/simd/pack.hpp>
+#include <boost/simd/reduction.hpp>
 #include "../include/ising.h"
 
 
@@ -42,12 +44,15 @@ void Ising::sweep_lattice_clean(const float beta, std::mt19937 &engine)
     for (int i = 0; i < size; i++) {
         int pos       = static_cast<int>(rand0(engine) * size);
         float r_val   = rand0(engine);
-        float delta_E = 0.0;
 
-        for (int j = 0; j < n_neigh; j++)
-            delta_E += spin[neigh[pos * n_neigh + j]];
+        // Manually load spin neighbor values
+        boost::simd::pack<float, 4> val = {spin[neigh[pos * n_neigh]],
+                                           spin[neigh[pos * n_neigh + 1]],
+                                           spin[neigh[pos * n_neigh + 2]],
+                                           spin[neigh[pos * n_neigh + 3]]};
 
-        delta_E *= 2.0 * spin[pos];
+        // Calculate delta_E = sum_neighbors(2.0 * spin[pos] * spin[neigh])
+        float delta_E = boost::simd::multiplies(boost::simd::sum(val), 2.0f * spin[pos]);
 
         // Accept / reject flip
         // SIMD optimized with boost::simd (found to save a noticable amount of time).
