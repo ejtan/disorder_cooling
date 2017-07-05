@@ -13,7 +13,7 @@ class Ising : public Model
 {
     private:
         std::vector<int> spin;
-        void sweep_lattice(const double beta, std::mt19937 &engine);
+        void sweep_lattice(const float beta, std::mt19937 &engine);
 
     public:
         Ising(const int L, const int dim);

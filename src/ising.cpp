@@ -1,5 +1,7 @@
 #include <iostream>
 #include <boost/simd/exponential.hpp>
+#include <boost/simd/function/multiplies.hpp>
+#include <boost/simd/function/fma.hpp>
 #include "../include/ising.h"
 
 
@@ -11,22 +13,22 @@
  *
  * Sweeps over the lattice of a disordered Ising system
  */
-void Ising::sweep_lattice(const double beta, std::mt19937 &engine)
+void Ising::sweep_lattice(const float beta, std::mt19937 &engine)
 {
-    int pos;
-    float r_val, delta_E;
-
     for (int i = 0; i < size; i++) {
-        pos     = static_cast<int>(rand0(engine) * size);
-        r_val   = rand0(engine);
-        delta_E = 2.0 * spin[pos] *
-            ((J[pos * n_neigh]     * spin[neigh[pos * n_neigh]]) +
-             (J[pos * n_neigh + 1] * spin[neigh[pos * n_neigh + 1]]) +
-             (J[pos * n_neigh + 2] * spin[neigh[pos * n_neigh + 2]]) +
-             (J[pos * n_neigh + 3] * spin[neigh[pos * n_neigh + 3]]));
+        int pos       = static_cast<int>(rand0(engine) * size);
+        float r_val   = rand0(engine);
+        float delta_E = 0.0;
+
+        for (int j = 0; j < n_neigh; j++)
+            delta_E += J[pos * n_neigh + j] * spin[neigh[pos * n_neigh + j]];
+
+        delta_E = 2.0 * spin[pos] * delta_E;
 
         // Accept / reject flip
-        if (r_val < boost::simd::exp(-beta * delta_E))
+        // SIMD optimized with boost::simd (found to save a noticable amount of time).
+        // Computes r_val < exp(-beta * delta_E)
+        if (r_val < boost::simd::exp(boost::simd::multiplies(-beta, delta_E)))
             spin[pos] = -spin[pos];
     } // Sweep over all possiable sites
 }
@@ -101,10 +103,10 @@ double Ising::sweep_energy(const double beta, std::mt19937 &engine)
     double E_tot = 0.0;
 
     for (int i = 0; i < warmup; i++)
-        sweep_lattice(beta, engine);
+        sweep_lattice(static_cast<float>(beta), engine);
 
     for (int i = 0; i < measure; i++) {
-        sweep_lattice(beta, engine);
+        sweep_lattice(static_cast<float>(beta), engine);
 
         for (int j = 0; j < size; j++) {
             E_tot += -((J[j * n_neigh]     * spin[j] * spin[neigh[j * n_neigh]]) +
