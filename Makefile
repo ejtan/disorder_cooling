@@ -10,9 +10,9 @@ SRCEXT := cpp
 SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
 OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
 WARNING := -Wall -Werror -Wextra -Wfloat-equal -ansi -pedantic
-CFLAGS := -pipe -O2 -std=c++14 -march=native -mtune=native -flto -funroll-loops \
+CFLAGS := -pipe -O2 -std=c++17 -march=native -mtune=native -flto -funroll-loops \
 	-finline-functions -fno-stack-protector -ftree-vectorize
-LIB := -fopenmp
+LIB := -L lib -fopenmp
 INC := -I include
 
 $(TARGET): $(OBJECTS)
