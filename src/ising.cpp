@@ -39,6 +39,12 @@ Ising::Ising(const int L, const int dim) : Model(L, dim)
 }
 
 
+/* copy constructor
+ */
+Ising::Ising(const Ising &rhs) : Model(rhs), spin(rhs.spin)
+{
+}
+
 /* init()
  *
  * Same as constructor with initalizer list

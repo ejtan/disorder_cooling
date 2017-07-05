@@ -17,6 +17,7 @@ class Ising : public Model
 
     public:
         Ising(const int L, const int dim);
+        Ising(const Ising &rhs);
         void init(const int L, const int dim);
         void set_spin();
         void set_exchange(const double delta);
