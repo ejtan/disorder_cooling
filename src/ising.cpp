@@ -1,7 +1,6 @@
 #include <iostream>
 #include <boost/simd/exponential.hpp>
 #include <boost/simd/function/multiplies.hpp>
-#include <boost/simd/function/fma.hpp>
 #include "../include/ising.h"
 
 
