@@ -17,13 +17,13 @@ Exchange_table::Exchange_table()
 /* Copy constructor
  */
 Exchange_table::Exchange_table(const Exchange_table &rhs) :
-    size(rhs.size), n_neigh(rhs.n_neigh), neigh(rhs.neigh), table(rhs.table)
+    size(rhs.size), n_neigh(rhs.n_neigh), clean(true), neigh(rhs.neigh), table(rhs.table)
 {
 }
 
 /* Constructor with initalizer list
  */
-Exchange_table::Exchange_table(const int L, const int dim)
+Exchange_table::Exchange_table(const int L, const int dim) : clean(true)
 {
     size = L * L;
 
@@ -46,7 +46,8 @@ Exchange_table::Exchange_table(const int L, const int dim)
  */
 void Exchange_table::init(const int L, const int dim)
 {
-    size = L * L;
+    size  = L * L;
+    clean = true;
 
     switch(dim) {
         case 2: n_neigh = 4; break;
@@ -66,6 +67,9 @@ void Exchange_table::init(const int L, const int dim)
  */
 void Exchange_table::generate_discrete(const double J, const double prob)
 {
+    if (clean)
+        clean = false;
+
     if (prob > 1 || prob < 0) {
         std::cerr << "Error: Expected p to be between 0 and 1" << std::endl;
         exit(EXIT_FAILURE);
@@ -103,6 +107,9 @@ void Exchange_table::generate_discrete(const double J, const double prob)
  */
 void Exchange_table::generate_continuous(const double delta)
 {
+    if (clean)
+        clean = false;
+
     std::uniform_real_distribution<float> rand0(0.0, 1.0);
     std::random_device rd;
     std::mt19937 engine(rd());
@@ -128,6 +135,16 @@ void Exchange_table::generate_continuous(const double delta)
         // 4 - 5 bond for 3D
         // Implament when 3D neighbor table is implamented
     } // Loop to set exchange table
+}
+
+
+/* is_clean()
+ *
+ * Checks if the system is clean or disordered.
+ */
+bool Exchange_table::is_clean()
+{
+    return clean;
 }
 
 

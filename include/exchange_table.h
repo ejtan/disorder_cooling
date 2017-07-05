@@ -21,6 +21,7 @@ class Exchange_table
 {
     private:
         int size, n_neigh;
+        bool clean;
         Neighbor_table neigh;
         std::vector<double> table;
 
@@ -31,6 +32,7 @@ class Exchange_table
         void init(const int L, const int dim);
         void generate_discrete(const double J, const double prob);
         void generate_continuous(const double delta);
+        bool is_clean();
         double operator[](const int idx) const;
 };
 
