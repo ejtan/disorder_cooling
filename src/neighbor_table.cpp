@@ -15,27 +15,27 @@ void Neighbor_table::set_2D_table(const int L)
     for (int i = 0; i < N; i++) {
         // 0-th neighbor
         if (i - L < 0)
-            table.push_back(i + N - L);
+            table[i * n_neigh] = i + N - L;
         else
-            table.push_back(i - L);
+            table[i * n_neigh] = i - L;
 
         // 1-st neighbor
         if ((i + 1) % L == 0)
-            table.push_back(i + 1 - L);
+            table[i * n_neigh + 1] = i + 1 - L;
         else
-            table.push_back(i + 1);
+            table[i * n_neigh + 1] = i + 1;
 
         // 2-nd neighbor
         if (i + L >= N)
-            table.push_back(i + L - N);
+            table[i * n_neigh + 2] = i + L - N;
         else
-            table.push_back(i + L);
+            table[i * n_neigh + 2] = i + L;
 
         // 3-rd neighbor
         if (i % L == 0)
-            table.push_back(i + L - 1);
+            table[i * n_neigh + 3] = i + L - 1;
         else
-            table.push_back(i - 1);
+            table[i * n_neigh + 3] = i - 1;
     } // Loop to set table
 }
 
@@ -76,9 +76,11 @@ Neighbor_table::Neighbor_table(const int L, const int dim)
 
     if (dim == 2) {
         n_neigh = 4;
+        table.resize(n_neigh * N);
         set_2D_table(L);
     } else if (dim == 3) {
         n_neigh = 6;
+        table.resize(n_neigh * N);
         set_3D_table(L);
     } else {
         std::cerr << "Error: Expected neighbor table dimension to be 2 or 3\n"
@@ -98,9 +100,11 @@ void Neighbor_table::init(const int L, const int dim)
 
     if (dim == 2) {
         n_neigh = 4;
+        table.resize(n_neigh * N);
         set_2D_table(L);
     } else if (dim == 3) {
         n_neigh = 6;
+        table.resize(n_neigh * N);
         set_3D_table(L);
     } else {
         std::cerr << "Error: Expected neighbor table dimension to be 2 or 3\n"
