@@ -35,7 +35,7 @@ void Ising::sweep_lattice(const double beta, std::mt19937 &engine)
  */
 Ising::Ising(const int L, const int dim) : Model(L, dim)
 {
-    spin.reserve(size);
+    spin.resize(size);
 }
 
 
@@ -46,7 +46,7 @@ Ising::Ising(const int L, const int dim) : Model(L, dim)
 void Ising::init(const int L, const int dim)
 {
     Model::init(L, dim);
-    spin.reserve(size);
+    spin.resize(size);
 }
 
 
