@@ -14,13 +14,13 @@
  * to work on different parts of the temperature array.
  */
 template<typename T, typename Model, size_t N>
-void run_mc(const std::array<T, N> &temp, std::array<T, N> &E, Model model)
+void run_mc(const std::array<T, N> &temp, std::array<T, N> &E, Model &model)
 {
     int chunk;
 
     // TODO:
     // At some point, figure out how to split uneven work among threads
-    #pragma omp paralle shared(chunk, temp) threadprivate(model) num_threads(4)
+    #pragma omp parallel shared(chunk, temp) threadprivate(model)
     {
         #pragma omp single
         {
@@ -44,7 +44,7 @@ void run_mc(const std::array<T, N> &temp, std::array<T, N> &E, Model model)
  * Computes the energy of a given clean model.
  */
 template<typename T, typename Model, size_t N>
-std::array<T, N> compute_energy_clean(const std::array<T, N> &temp, Model model)
+std::array<T, N> compute_energy_clean(const std::array<T, N> &temp, Model &model)
 {
     if (!(std::is_same<double, T>::value || std::is_same<float, T>::value)) {
         std::cerr << "Error: Expected array of float or double" << std::endl;
@@ -68,7 +68,7 @@ std::array<T, N> compute_energy_clean(const std::array<T, N> &temp, Model model)
  */
 template<typename T, typename Model, size_t N>
 std::array<T, N> compute_energy_disorder(const std::array<T, N> &temp,
-        Model model, const int n_run, const double delta)
+        Model &model, int n_run, double delta)
 {
     if (!(std::is_same<double, T>::value || std::is_same<float, T>::value)) {
         std::cerr << "Error: Expected array of float or double" << std::endl;
@@ -101,7 +101,7 @@ std::array<T, N> compute_energy_disorder(const std::array<T, N> &temp,
  */
 template<typename T, typename Model, size_t N>
 std::array<T, N> compute_energy_disorder(const std::array<T, N> &temp,
-        Model model, const int n_run, const double J, const double P)
+        Model &model, int n_run, double J, double P)
 {
     if (!(std::is_same<double, T>::value || std::is_same<float, T>::value)) {
         std::cerr << "Error: Expected array of float or double" << std::endl;
