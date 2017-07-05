@@ -13,6 +13,14 @@ Model::Model() : rand0(0.0, 1.0)
 }
 
 
+/* Copy constructor
+ */
+Model::Model(const Model &rhs) :
+    size(rhs.size), n_neigh(rhs.n_neigh), rand0(0.0, 1.0), neigh(rhs.neigh), J(rhs.J)
+{
+}
+
+
 /* Constructor with arguments.
  */
 Model::Model(const int L, const int dim) : rand0(0.0, 1.0)

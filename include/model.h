@@ -22,6 +22,7 @@ class Model
     public:
         Model();
         Model(const int L, const int dim);
+        Model(const Model &rhs);
         void init(const int L, const int dim);
         virtual void set_spin() = 0;
         void set_exchange(const double delta);
