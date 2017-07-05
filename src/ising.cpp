@@ -6,6 +6,11 @@
 /*-------------------------------------------------------------------------------------------------
  * PRIVATE METHODS
  *-----------------------------------------------------------------------------------------------*/
+
+/* sweep_lattice()
+ *
+ * Sweeps over the lattice of a disordered Ising system
+ */
 void Ising::sweep_lattice(const double beta, std::mt19937 &engine)
 {
     int pos;
