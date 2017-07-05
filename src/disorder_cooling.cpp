@@ -1,5 +1,7 @@
 #include <iostream>
+#include <fstream>
 #include <cstddef>
+#include <cmath>
 #include <array>
 #include <algorithm>
 #include <random>
@@ -121,4 +123,41 @@ std::array<T, N> compute_energy_disorder(const std::array<T, N> &temp,
     });
 
     return E;
+}
+
+
+/* compute_entropy()
+ *
+ * Computes the entropy given arrays of energy E and temperature temp.
+ * Uses traozeoidal rule on the entropy integral (set as a subroutine). Outputs data to a file.
+ */
+template <typename T, size_t N>
+void compute_entropy(const std::array<T, N> &E, const std::array<T, N> &temp,
+        const std::string &filename)
+{
+    std::ofstream of(filename);
+
+    for (int i = 0; i < N - 1; i++)
+        of << temp[i] << ' ' << log(2) + (E[i] / temp[i]) - trapezoid_entropy(E, temp, i) << '\n';
+
+    of.close();
+}
+
+
+/* trapezoid_entropy()
+ *
+ * Performs integration with trapezoidal rule. Does not assume a constant dT, but computes
+ * the step ever iteration.
+ */
+template <typename T, size_t N>
+double trapezoid_entropy(const std::array<T, N> &E, const std::array<T, N> &temp, int idx)
+{
+    double sum = 0.0;
+
+    for (int i = idx; i < N - 1; i++) {
+        double dT = temp[i + 1] - temp[i];
+        sum += dT * ((E[i] / (temp[i] * temp[i])) + (E[i + 1] / (temp[i + 1] * temp[i + 1])));
+    } // Loop to compute the integral
+
+    return sum * 0.5;
 }
