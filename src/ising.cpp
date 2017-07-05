@@ -1,5 +1,5 @@
 #include <iostream>
-#include <cmath>
+#include <boost/simd/exponential.hpp>
 #include "../include/ising.h"
 
 
@@ -26,7 +26,7 @@ void Ising::sweep_lattice(const double beta, std::mt19937 &engine)
              (J[pos * n_neigh + 3] * spin[neigh[pos * n_neigh + 3]]));
 
         // Accept / reject flip
-        if (r_val < exp(-beta * delta_E))
+        if (r_val < boost::simd::exp(-beta * delta_E))
             spin[pos] = -spin[pos];
     } // Sweep over all possiable sites
 }
