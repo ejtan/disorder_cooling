@@ -12,20 +12,18 @@
  *
  * Primary function for running the Monte Carlo simulation. Forks threads
  * to work on different parts of the temperature array.
+ *
+ * Note: for some reason, firstprivate cant copy if model is passed as reference.
  */
 template<typename T, typename Model, size_t N>
-void run_mc(const std::array<T, N> &temp, std::array<T, N> &E, Model &model)
+void run_mc(const std::array<T, N> &temp, std::array<T, N> &E, Model model)
 {
     int chunk;
 
-    // TODO:
-    // At some point, figure out how to split uneven work among threads
-    #pragma omp parallel shared(chunk, temp) threadprivate(model)
+    #pragma omp parallel shared(chunk) firstprivate(model)
     {
         #pragma omp single
-        {
-            chunk =  N / omp_get_num_threads();
-        } // Single Region
+        chunk =  N / omp_get_num_threads();
 
         int thd_id = omp_get_thread_num();
         std::random_device rd;

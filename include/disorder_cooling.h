@@ -16,7 +16,7 @@
  */
 
 template<typename T, typename Model, size_t N>
-void run_mc(const std::array<T, N> &temp, std::array<T, N> &E, Model &model);
+void run_mc(const std::array<T, N> &temp, std::array<T, N> &E, Model model);
 
 template<typename T, typename Model, size_t N>
 std::array<T, N> compute_energy_clean(const std::array<T, N> &temp, Model &model);
