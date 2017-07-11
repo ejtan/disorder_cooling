@@ -49,7 +49,7 @@ struct Neighbor
             if ((pos + 1) % L == 0)   neighbor[1] = pos + 1 - L;
             else                      neighbor[1] = pos + 1;
             // 2-nd neighbor
-            if ((pos + L) % N2 >= N2) neighbor[2] = pos + L - N2;
+            if ((pos + L) % N2 < L) neighbor[2] = pos + L - N2;
             else                      neighbor[2] = pos + L;
             // 3-rd neighbor
             if (pos % L == 0)         neighbor[3] = pos + L - 1;
@@ -59,11 +59,11 @@ struct Neighbor
                 int N3 = L * L * L; // Total number of sites in a 3D lattice
 
                 // 4-th neighbor
-                if (pos - N2 < 0)  neighbor[4] = pos + N3 - N2;
-                else               neighbor[4] = pos - N2;
+                if (pos - N2 < 0)   neighbor[4] = pos + N3 - N2;
+                else                neighbor[4] = pos - N2;
                 // 5-th neighbor
-                if (pos + N2 > N3) neighbor[5] = pos - N3 + N2;
-                else               neighbor[5] = pos + N2;
+                if (pos + N2 >= N3) neighbor[5] = pos - N3 + N2;
+                else                neighbor[5] = pos + N2;
             } // Set 3D layer (if needed)
         } // Set 2D layer
     }
