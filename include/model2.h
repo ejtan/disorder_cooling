@@ -14,10 +14,13 @@ class Model2
     protected:
         static const int warmup  = 30000;
         static const int measure = 500000;
+        static const int n_neigh = 4;
         int size;
+        bool isClean;
         std::uniform_real_distribution<float> rand0;
         std::vector<Neighbor<2>> neigh;
         std::vector<double> J;
+
     public:
         Model2();
         Model2(const int L);

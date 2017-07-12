@@ -7,14 +7,14 @@
 
 /* Default constructor
  */
-Model2::Model2() : rand0(0.0, 1.0)
+Model2::Model2() : rand0(0.0, 1.0), isClean(true)
 {
 }
 
 
 /* Constructor with parameters
  */
-Model2::Model2(const int L) : rand0(0.0, 1.0)
+Model2::Model2(const int L) : rand0(0.0, 1.0), isClean(true)
 {
     size = L * L;
 
@@ -25,6 +25,6 @@ Model2::Model2(const int L) : rand0(0.0, 1.0)
 
 /* Copy constructor
  */
-Model2::Model2(const Model2 &rhs) : size(rhs.size), neigh(rhs.neigh), J(rhs.J)
+Model2::Model2(const Model2 &rhs) : size(rhs.size), isClean(rhs.isClean), neigh(rhs.neigh), J(rhs.J)
 {
 }
