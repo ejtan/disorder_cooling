@@ -1,4 +1,5 @@
 #include "../include/model2.h"
+#include <iostream>
 
 
 /*-------------------------------------------------------------------------------------------------
@@ -20,6 +21,9 @@ Model2::Model2(const int L) : rand0(0.0, 1.0), isClean(true)
 
     neigh.resize(size);
     J.resize(n_neigh * size);
+
+    for (size_t i = 0; i < size; i++)
+        neigh[i].set_neighbors(i, L);
 }
 
 
