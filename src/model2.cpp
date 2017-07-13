@@ -73,3 +73,13 @@ std::vector<Exchange<2>> Model2::get_exchange() const
 {
     return J;
 }
+
+
+/* set_run_param()
+ * Overrides the default parameters for running simulations.
+ */
+void Model2::set_run_param(int Warmup, int Measure)
+{
+    warmup  = Warmup;
+    measure = Measure;
+}

@@ -13,8 +13,8 @@
 class Model2
 {
     protected:
-        static const int warmup  = 30000;
-        static const int measure = 500000;
+        int warmup  = 30000;
+        int measure = 500000;
         static const int n_neigh = 4;
         int size;
         bool isClean;
@@ -30,6 +30,7 @@ class Model2
         virtual double sweep_energy(double beta, std::mt19937 &engine) = 0;
         void set_exchange(double delta);
         std::vector<Exchange<2>> get_exchange() const;
+        void set_run_param(int Warmup, int Measure);
 };
 
 #endif
