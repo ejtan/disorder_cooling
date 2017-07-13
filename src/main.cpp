@@ -1,18 +1,64 @@
 #include <iostream>
 #include <vector>
 #include <array>
+#include <random>
+#include <limits>
+#include <cmath>
 
 #include "../include/neighbor.h"
+#include "../include/exchange.h"
+#include "../include/model2.h"
 
 
 /*-------------------------------------------------------------------------------------------------
  * GLOBAL CONSTANTS
  *-----------------------------------------------------------------------------------------------*/
+const int L = 3;
 
 
 /*-------------------------------------------------------------------------------------------------
  * FUNCTIONS
  *-----------------------------------------------------------------------------------------------*/
+/* test_exchange_2D()
+ */
+void test_exchange_2D()
+{
+    std::array<Neighbor<2>, L * L> neigh;
+    Model2 model(L);
+
+    for (size_t i = 0; i < L * L; i++)
+        neigh[i].set_neighbors(i, L);
+
+    for (int i = 0; i < 5; i++) {
+        std::cout << "  Testing 2D Bonds (test " << i + 1 << ")... ";
+
+        std::random_device rd;
+        std::mt19937 engine(rd());
+        std::uniform_real_distribution<double> rand0(0.0, 20.0); // Choose a delta within this range
+
+        model.set_exchange(rand0(engine));
+
+        auto J = model.get_exchange();
+        bool isEqual = true;
+
+        for (int i = 0; i < L * L; i++) {
+            double bond0 = J[i].J_arr[0];
+            double bond2 = J[neigh[i].neighbor[0]].J_arr[2];
+            double bond1 = J[i].J_arr[1];
+            double bond3 = J[neigh[i].neighbor[1]].J_arr[3];
+
+            if (fabs(bond0 - bond2) > std::numeric_limits<double>::epsilon() ||
+                    fabs(bond1 - bond3) > std::numeric_limits<double>::epsilon()) {
+                isEqual = false;
+                break;
+            } // Check if the bonds are the same
+        } // Loop over sites
+
+        if (isEqual) std::cout << "Passed\n";
+        else         std::cout << "Failed\n";
+    } // Loop over several tests
+}
+
 
 /* test_neighbor_2D()
  * Tests sites for the 2D Neighbor table
@@ -39,7 +85,6 @@ void test_neighbor_2D()
     expected_2D.push_back( Neigh2{4, 8, 1, 6} );
     expected_2D.push_back( Neigh2{5, 6, 2, 7} );
 
-    const int L = 3;
     bool isEqual = true;
     Neighbor<2> neigh;
 
@@ -105,7 +150,6 @@ void test_neighbor_3D()
     expected_3D.push_back( Neigh3{22, 26, 19, 24, 16, 7} );
     expected_3D.push_back( Neigh3{23, 24, 20, 25, 17, 8} );
 
-    const int L = 3;
     bool isEqual = true;
     Neighbor<3> neigh;
 
@@ -132,6 +176,10 @@ int main(int argc, char **argv)
     std::cout << "Testing Neighbor class implementation for correct neighbor indices\n";
     test_neighbor_2D();
     test_neighbor_3D();
+
+    std::cout << "\nTesting for equality of exchange table\n";
+    test_exchange_2D();
+
 
     return 0;
 }
