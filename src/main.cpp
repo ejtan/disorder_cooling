@@ -17,8 +17,32 @@ const int L = 3;
 
 
 /*-------------------------------------------------------------------------------------------------
+ * FORWARD DECLARATIONS
+ *-----------------------------------------------------------------------------------------------*/
+void test_neighbor_2D();
+void test_neighbor_3D();
+void test_exchange_2D();
+
+/*-------------------------------------------------------------------------------------------------
+ * MAIN
+ *-----------------------------------------------------------------------------------------------*/
+int main(int argc, char **argv)
+{
+    std::cout << "Testing Neighbor class implementation for correct neighbor indices\n";
+    test_neighbor_2D();
+    test_neighbor_3D();
+
+    std::cout << "\nTesting for equality of exchange table\n";
+    test_exchange_2D();
+
+    return 0;
+}
+
+
+/*-------------------------------------------------------------------------------------------------
  * FUNCTIONS
  *-----------------------------------------------------------------------------------------------*/
+
 /* test_exchange_2D()
  */
 void test_exchange_2D()
@@ -164,22 +188,4 @@ void test_neighbor_3D()
 
     if (isEqual) std::cout << "Passed\n";
     else         std::cout << "Failed\n";
-}
-
-
-/*-------------------------------------------------------------------------------------------------
- * MAIN
- *-----------------------------------------------------------------------------------------------*/
-
-int main(int argc, char **argv)
-{
-    std::cout << "Testing Neighbor class implementation for correct neighbor indices\n";
-    test_neighbor_2D();
-    test_neighbor_3D();
-
-    std::cout << "\nTesting for equality of exchange table\n";
-    test_exchange_2D();
-
-
-    return 0;
 }
