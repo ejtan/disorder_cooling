@@ -28,6 +28,7 @@ class Model2
         Model2(const Model2 &rhs);
         void init(int L);
         void set_exchange(double delta);
+        std::vector<Exchange<2>> get_exchange() const;
 };
 
 #endif

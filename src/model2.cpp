@@ -79,3 +79,12 @@ void Model2::set_exchange(double delta)
         J[neigh[i].neighbor[1]].J_arr[3] = J_val;
     } // Loop to set exchange table
 }
+
+
+/* get_exchange()
+ * Returns the vector which contains the exchange table.
+ */
+std::vector<Exchange<2>> Model2::get_exchange() const
+{
+    return J;
+}
