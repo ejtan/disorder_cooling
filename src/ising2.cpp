@@ -1,4 +1,29 @@
+#include <cmath>
 #include "../include/ising2.h"
+
+
+/*-------------------------------------------------------------------------------------------------
+ * PRIVATE METHODS
+ *-----------------------------------------------------------------------------------------------*/
+
+/* sweep_lattice_clean()
+ * Performans Monte Carlo sweeps. Sweeps the lattice once by choosing a random position and
+ * proposing a spin flip using the Meteropolis Algorithm. This is done for the lattice size.
+ */
+void Ising2::sweep_lattice_clean(float beta, std::mt19937 &engine)
+{
+    for (size_t i = 0; i < size; i++) {
+        int pos       = static_cast<int>(rand0(engine) * size);
+        float delta_E = 2.0 * spin[pos] * (spin[neigh[pos].neighbor[0]] +
+                                           spin[neigh[pos].neighbor[1]] +
+                                           spin[neigh[pos].neighbor[2]] +
+                                           spin[neigh[pos].neighbor[3]]);
+
+        // Accep / reject flip
+        if (rand0(engine) < exp(-beta * delta_E))
+            spin[pos] = -spin[pos];
+    } // Sweep over sites
+}
 
 
 /*-------------------------------------------------------------------------------------------------
@@ -29,3 +54,27 @@ void Ising2::set_spin()
         ele = 1;
 }
 
+
+/* sweep_energy()
+ * Performs monte carlo sweeps and calcuates the energy
+ */
+double Ising2::sweep_energy(double beta, std::mt19937 &engine)
+{
+    double E_tot = 0.0;
+
+    if (isClean) {
+        for (size_t i = 0; i < warmup; i++)
+            sweep_lattice_clean(beta, engine);
+
+        for (size_t i = 0; i < measure; i++) {
+            sweep_lattice_clean(beta, engine);
+
+            for (size_t j = 0; j < size; j++)
+                E_tot += -spin[j] * (spin[neigh[j].neighbor[0]] + spin[neigh[j].neighbor[0]]);
+
+        } // Perform measurement sweeps
+    }
+    // TODO: Handle else case (disordered system)
+
+    return E_tot / static_cast<double>(measure * size);
+}
