@@ -26,6 +26,7 @@ class Model2
         Model2();
         Model2(const int L);
         Model2(const Model2 &rhs);
+        virtual void set_spin() = 0;
         void set_exchange(double delta);
         std::vector<Exchange<2>> get_exchange() const;
 };
