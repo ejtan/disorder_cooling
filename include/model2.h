@@ -5,6 +5,7 @@
 #include <vector>
 #include <random>
 #include "neighbor.h"
+#include "exchange.h"
 
 
 /* Base class for 2D Classical spin models.
@@ -19,12 +20,14 @@ class Model2
         bool isClean;
         std::uniform_real_distribution<float> rand0;
         std::vector<Neighbor<2>> neigh;
-        std::vector<double> J;
+        std::vector<Exchange<2>> J;
 
     public:
         Model2();
         Model2(const int L);
         Model2(const Model2 &rhs);
+        void init(int L);
+        void set_exchange(double delta);
 };
 
 #endif
