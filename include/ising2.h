@@ -20,6 +20,7 @@ class Ising2 : public Model2
         Ising2() = default;
         Ising2(const int L);
         Ising2(const Ising2 &rhs);
+        void set_spin();
 };
 
 #endif
