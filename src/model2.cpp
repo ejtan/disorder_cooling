@@ -35,21 +35,6 @@ Model2::Model2(const Model2 &rhs) : size(rhs.size), isClean(rhs.isClean), neigh(
 }
 
 
-/* init()
- * Initalizes the model. Same as Constructor with parameters.
- */
-void Model2::init(int L)
-{
-    size = L * L;
-
-    neigh.resize(size);
-    J.resize(n_neigh * size);
-
-    for (size_t i = 0; i < size; i++)
-        neigh[i].set_neighbors(i, L);
-}
-
-
 /* set_exchange()
  * Sets the exchange table used by 2D Models. delta is the range of the uniform distribution
  * with a mean centered at 1. The range of random values is J = [1 - delta/2, 1 + delta/2].
