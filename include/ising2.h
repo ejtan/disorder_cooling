@@ -16,6 +16,7 @@ class Ising2 : public Model2
     private:
         std::vector<int> spin;
         void sweep_lattice_clean(float beta, std::mt19937 &engine);
+        void sweep_lattice_disorder(float beta, std::mt19937 &engine);
 
     public:
         Ising2() = default;
