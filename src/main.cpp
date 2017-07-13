@@ -7,7 +7,7 @@
 
 #include "../include/neighbor.h"
 #include "../include/exchange.h"
-#include "../include/model2.h"
+#include "../include/ising2.h"
 
 
 /*-------------------------------------------------------------------------------------------------
@@ -48,7 +48,7 @@ int main(int argc, char **argv)
 void test_exchange_2D()
 {
     std::array<Neighbor<2>, L * L> neigh;
-    Model2 model(L);
+    Ising2 model(L);
 
     for (size_t i = 0; i < L * L; i++)
         neigh[i].set_neighbors(i, L);
