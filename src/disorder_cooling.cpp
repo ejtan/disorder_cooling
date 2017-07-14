@@ -6,7 +6,7 @@
 #include <type_traits>
 
 
-/* compute_energy_clean()
+/* compute_energy()
  * Finds the energy of a clean model.
  */
 template <typename TT, typename Model, size_t N>
@@ -25,7 +25,7 @@ std::array<TT, N> compute_energy(const std::array<TT, N> &T, Model &model)
 }
 
 
-/* compute_energy_disorder()
+/* compute_energy()
  * Finds the energy of a disorder model.
  */
 template <typename TT, typename Model, size_t N>
