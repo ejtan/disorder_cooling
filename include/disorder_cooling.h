@@ -13,7 +13,7 @@
  * Provides functions for running the simulation, gathering data, and processing data to a file.
  */
 template <typename TT, typename Model, size_t N>
-std::array<TT, N> compute_energy_clean(const std::array<TT, N> &T, Model &model);
+std::array<TT, N> compute_energy(const std::array<TT, N> &T, Model &model);
 
 template <typename TT, typename Model, size_t N>
 std::array<TT, N> compute_energy(const std::array<TT, N> &T, Model &model,

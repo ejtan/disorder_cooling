@@ -10,7 +10,7 @@
  * Finds the energy of a clean model.
  */
 template <typename TT, typename Model, size_t N>
-std::array<TT, N> compute_energy_clean(const std::array<TT, N> &T, Model &model)
+std::array<TT, N> compute_energy(const std::array<TT, N> &T, Model &model)
 {
     if (!(std::is_same<double, TT>::value || std::is_same<float, TT>::value)) {
         std::cerr << "Error: Expected array of floar or double." << std::endl;
