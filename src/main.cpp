@@ -223,7 +223,7 @@ void test_ising_clean(const std::array<double, N_pts> &T)
     ising.set_run_param(30000, 50000);
 
     std::cout << "  Running 2D Ising Model (clean)... ";
-    auto E = compute_energy_clean(T, ising);
+    auto E = compute_energy(T, ising);
     compute_entropy(E, T, "2D_ising_clean.txt");
     std::cout << "Done\n";
 }
