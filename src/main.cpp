@@ -1,19 +1,24 @@
 #include <iostream>
 #include <vector>
 #include <array>
+#include <algorithm>
 #include <random>
 #include <limits>
-#include <cmath>
 
 #include "../include/neighbor.h"
 #include "../include/exchange.h"
 #include "../include/ising2.h"
+#include "../include/disorder_cooling.h"
 
 
 /*-------------------------------------------------------------------------------------------------
  * GLOBAL CONSTANTS
  *-----------------------------------------------------------------------------------------------*/
-const int L = 3;
+const int L     = 3;
+const int N_pts = 200;
+const int n_run = 10;
+const double dT = 0.1;
+const double delta = 2.0;
 
 
 /*-------------------------------------------------------------------------------------------------
@@ -22,6 +27,8 @@ const int L = 3;
 void test_neighbor_2D();
 void test_neighbor_3D();
 void test_exchange_2D();
+void test_ising_clean(const std::array<double, N_pts> &T);
+
 
 /*-------------------------------------------------------------------------------------------------
  * MAIN
@@ -34,6 +41,18 @@ int main(int argc, char **argv)
 
     std::cout << "\nTesting for equality of exchange table\n";
     test_exchange_2D();
+
+    // Initalize a temperature array
+    std::array<double, N_pts> T;
+    int curr = 0;
+
+    std::generate(T.begin(), T.end(), [&curr]() {
+            curr++;
+            return dT * static_cast<double>(curr);
+    });
+
+    std::cout << "\nTesting 2D Ising Model with L = 4.\n";
+    test_ising_clean(T);
 
     return 0;
 }
@@ -188,4 +207,21 @@ void test_neighbor_3D()
 
     if (isEqual) std::cout << "Passed\n";
     else         std::cout << "Failed\n";
+}
+
+
+/* test_ising_clean()
+ * Performs Monte carlo simulation for 2D clean system.
+ *
+ * Implament 3D when ready.
+ */
+void test_ising_clean(const std::array<double, N_pts> &T)
+{
+    Ising2 ising(4);
+    ising.set_run_param(30000, 50000);
+
+    std::cout << "  Running 2D Ising Model... ";
+    auto E = compute_energy_clean(T, ising);
+    compute_entropy(E, T, "2D_ising_clean.txt");
+    std::cout << "Done\n";
 }
