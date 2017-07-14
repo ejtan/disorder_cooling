@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <random>
 #include <type_traits>
+#include <omp.h>
 
 
 /* compute_energy()
@@ -85,13 +86,24 @@ void compute_entropy(const std::array<TT, N> &E, const std::array<TT, N> &T,
 template <typename TT, typename Model, size_t N>
 void run_mc_energy(const std::array<TT, N> &T, std::array<TT, N> &E, Model model)
 {
-    std::random_device rd;
-    std::mt19937 engine(rd());
+    int chunk;
 
-    for (size_t i = 0; i < N; i++) {
-        model.set_spin();
-        E[i] += model.sweep_energy(1.0 / T[i], engine);
-    } // Loop over all temperatures
+    // TODO: implament omp parallel for arbituary thread count
+    #pragma omp parallel shared(chunk) firstprivate(model) num_threads(4)
+    {
+        #pragma omp single
+        chunk = N / omp_get_num_threads();
+
+
+        int thd_id = omp_get_thread_num();
+        std::random_device rd;
+        std::mt19937 engine(rd());
+
+        for (size_t i = chunk * thd_id; i < (chunk * (thd_id + 1)); i++) {
+            model.set_spin();
+            E[i] += model.sweep_energy(1.0 / T[i], engine);
+        } // Loop over all temperatures
+    } // Parallel region
 }
 
 
