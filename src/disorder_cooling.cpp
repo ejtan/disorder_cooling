@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <array>
 #include <random>
 #include <type_traits>
@@ -23,6 +24,29 @@ std::array<TT, N> compute_energy_clean(const std::array<TT, N> &T, Model &model)
 }
 
 
+/* compute_entropy()
+ * Takes in an energy and a tempearture array, computes the entropy, and outputs to a file.
+ * There will be N-1 points in the output file due to the integration.
+ */
+template <typename TT, size_t N>
+void compute_entropy(const std::array<TT, N> &E, const std::array<TT, N> &T,
+        const std::string &filename)
+{
+    std::ofstream of(filename);
+    const double ln2 = 0.693147180559945;
+
+    std::array<TT, N> integral_values;
+
+    for (size_t i = 0; i < N; i++)
+        integral_values[i] = E[i] / (T[i] * T[i]);
+
+    for (size_t i = 0; i < N - 1; i++)
+        of << T[i] << ' ' << ln2 + (E[i] / T[i]) - trapezoid(T, integral_values, i) << '\n';
+
+    of.close();
+}
+
+
 /*-------------------------------------------------------------------------------------------------
  * Intended Helper functions
  *-----------------------------------------------------------------------------------------------*/
@@ -40,4 +64,22 @@ void run_mc_energy(const std::array<TT, N> &T, std::array<TT, N> &E, Model model
         model.set_spin();
         E[i] += model.sweep_energy(1.0 / T[i], engine);
     } // Loop over all temperatures
+}
+
+
+/* trapezoid()
+ * Perfroms integration with the trapezoidal rule with arbituary step sizes.
+ */
+template <typename TT, size_t N>
+double trapezoid(const std::array<TT, N> &x, const std::array<TT, N> &y, int idx)
+{
+    double sum = 0.0;
+
+    #pragma omp simd reduction(+:sum)
+    for (size_t i = idx; i < N - 1; i++) {
+        double dx = x[i + 1] - x[i];
+        sum += dx * (y[i] + y[i + 1]);
+    } // Loop to compute the integral
+
+    return 0.5 * sum;
 }
