@@ -9,14 +9,14 @@
 
 /* Default constructor
  */
-Model2::Model2() : rand0(0.0, 1.0), isClean(true)
+Model2::Model2() : isClean(true), rand0(0.0, 1.0)
 {
 }
 
 
 /* Constructor with parameters
  */
-Model2::Model2(const int L) : rand0(0.0, 1.0), isClean(true)
+Model2::Model2(const int L) : isClean(true), rand0(0.0, 1.0)
 {
     size = L * L;
 
@@ -48,7 +48,7 @@ void Model2::set_exchange(double delta)
     std::mt19937 engine(rd());
     double J_val, r_val;
 
-    for (int i = 0; i < size; i++) {
+    for (size_t i = 0; i < size; i++) {
         // 0 - 2 bond
         r_val = rand0(engine);
         if (rand0(engine) > 0.5) J_val = 1.0 - (delta * r_val / 2.0);
@@ -78,7 +78,7 @@ std::vector<Exchange<2>> Model2::get_exchange() const
 /* set_run_param()
  * Overrides the default parameters for running simulations.
  */
-void Model2::set_run_param(int Warmup, int Measure)
+void Model2::set_run_param(size_t Warmup, size_t Measure)
 {
     warmup  = Warmup;
     measure = Measure;

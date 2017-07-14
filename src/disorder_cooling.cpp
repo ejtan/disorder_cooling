@@ -99,7 +99,7 @@ void run_mc_energy(const std::array<TT, N> &T, std::array<TT, N> &E, Model model
         std::random_device rd;
         std::mt19937 engine(rd());
 
-        for (size_t i = chunk * thd_id; i < (chunk * (thd_id + 1)); i++) {
+        for (int i = chunk * thd_id; i < (chunk * (thd_id + 1)); i++) {
             model.set_spin();
             E[i] += model.sweep_energy(1.0 / T[i], engine);
         } // Loop over all temperatures
