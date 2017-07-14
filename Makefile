@@ -9,9 +9,9 @@ TARGET := bin/disorder_cooling
 SRCEXT := cpp
 SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
 OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
-WARNING := -Wall -Werror -Wextra -Wfloat-equal -ansi -pedantic
-CFLAGS := -pipe -O2 -std=c++17 -march=native -mtune=native -flto -funroll-loops \
-	-finline-functions -fno-stack-protector -ftree-vectorize -fopenmp
+WARNING := -Wall -Werror -Wextra -Wfloat-equal -pedantic
+CFLAGS := -pipe -O2 -std=c++14 -march=native -mtune=native -flto -funroll-loops \
+	-finline-functions -fno-stack-protector -ftree-vectorize -fopenmp -m64 -DNDEBUG
 LIB := -L lib -fopenmp
 INC := -I include
 
@@ -21,7 +21,7 @@ $(TARGET): $(OBJECTS)
 
 $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 	@mkdir -p $(BUILDDIR)
-	@echo " $(CC) $(CFLAGS) $(INC) -c -o $@ $<"; $(CC) $(CFLAGS) $(INC) -c -o $@ $<
+	@echo " $(CC) $(CFLAGS) $(WARNING) $(INC) -c -o $@ $<"; $(CC) $(CFLAGS) $(WARNING) $(INC) -c -o $@ $<
 
 clean:
 	@echo " Cleaning..."
