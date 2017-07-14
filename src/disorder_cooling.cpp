@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <array>
+#include <algorithm>
 #include <random>
 #include <type_traits>
 
@@ -19,6 +20,33 @@ std::array<TT, N> compute_energy_clean(const std::array<TT, N> &T, Model &model)
     std::array<TT, N> E = {0};
 
     run_mc_energy(T, E, model);
+
+    return E;
+}
+
+
+/* compute_energy_disorder()
+ * Finds the energy of a disorder model.
+ */
+template <typename TT, typename Model, size_t N>
+std::array<TT, N> compute_energy(const std::array<TT, N> &T, Model &model,
+        double delta, int n_run)
+{
+    if (!(std::is_same<double, TT>::value || std::is_same<float, TT>::value)) {
+        std::cerr << "Error: Expected array of floar or double." << std::endl;
+        exit(EXIT_FAILURE);
+    } // Check for correct inputs.
+
+    std::array<TT, N> E = {0};
+
+    for (int run = 0; run < n_run; run++) {
+        model.set_exchange(delta);
+        run_mc_energy(T, E, model);
+    } // Loop over runs
+
+    // Normalize data
+    std::transform(E.begin(), E.end(), E.begin(),
+            [n_run](double val) { return val / static_cast<double>(n_run); });
 
     return E;
 }
