@@ -18,7 +18,7 @@ const int L     = 3;
 const int N_pts = 200;
 const int n_run = 10;
 const double dT = 0.1;
-const double delta = 2.0;
+const double delta = 5.0;
 
 
 /*-------------------------------------------------------------------------------------------------
@@ -28,6 +28,7 @@ void test_neighbor_2D();
 void test_neighbor_3D();
 void test_exchange_2D();
 void test_ising_clean(const std::array<double, N_pts> &T);
+void test_ising_disorder(const std::array<double, N_pts> &T);
 
 
 /*-------------------------------------------------------------------------------------------------
@@ -53,6 +54,7 @@ int main(int argc, char **argv)
 
     std::cout << "\nTesting 2D Ising Model with L = 4.\n";
     test_ising_clean(T);
+    test_ising_disorder(T);
 
     return 0;
 }
@@ -220,8 +222,25 @@ void test_ising_clean(const std::array<double, N_pts> &T)
     Ising2 ising(4);
     ising.set_run_param(30000, 50000);
 
-    std::cout << "  Running 2D Ising Model... ";
+    std::cout << "  Running 2D Ising Model (clean)... ";
     auto E = compute_energy_clean(T, ising);
     compute_entropy(E, T, "2D_ising_clean.txt");
+    std::cout << "Done\n";
+}
+
+
+/* test_ising_disorder()
+ * Performs Monte carlo simulation for 2D disorder system.
+ *
+ * Implament 3D when ready.
+ */
+void test_ising_disorder(const std::array<double, N_pts> &T)
+{
+    Ising2 ising(4);
+    ising.set_run_param(30000, 50000);
+
+    std::cout << "  Running 2D Ising Model (disorder)... ";
+    auto E = compute_energy(T, ising, delta, n_run);
+    compute_entropy(E, T, "2D_ising_disorder.txt");
     std::cout << "Done\n";
 }
