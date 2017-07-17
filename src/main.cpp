@@ -34,7 +34,8 @@ void test_ising_disorder(const std::array<double, N_pts> &T);
 /*-------------------------------------------------------------------------------------------------
  * MAIN
  *-----------------------------------------------------------------------------------------------*/
-int main(int argc, char **argv)
+//int main(int argc, char **argv)
+int main(void)
 {
     std::cout << "Testing Neighbor class implementation for correct neighbor indices\n";
     test_neighbor_2D();
