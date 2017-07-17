@@ -21,6 +21,7 @@ class Clock2 : public Model2
         Clock2() = default;
         Clock2(const int L, const int _q);
         Clock2(const Clock2 &rhs);
+        void set_spin();
 };
 
 #endif
