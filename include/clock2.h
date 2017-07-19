@@ -3,6 +3,7 @@
 
 
 #include <vector>
+#include <random>
 #include "model2.h"
 
 
@@ -17,11 +18,15 @@ class Clock2 : public Model2
         std::vector<int> spin;
         std::vector<double> cos_val;
 
+        void sweep_lattice_clean(float beta, std::mt19937 &engine);
+        void sweep_lattice_disorder(float beta, std::mt19937 &engine);
+
     public:
         Clock2() = default;
         Clock2(const int L, const int _q);
         Clock2(const Clock2 &rhs);
         void set_spin();
+        double sweep_energy(double beta, std::mt19937 &engine);
 };
 
 #endif
