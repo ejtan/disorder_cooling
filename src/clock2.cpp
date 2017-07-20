@@ -83,7 +83,7 @@ void Clock2::sweep_lattice_disorder(float beta, std::mt19937 &engine)
 Clock2::Clock2(const int L, const int _q) : Model2(L), q(_q)
 {
     spin.resize(size);
-    cos_val.resize(size);
+    cos_val.resize(q);
 
     // Set spin table
     double dq = 2.0 * M_PI / static_cast<double>(_q);
