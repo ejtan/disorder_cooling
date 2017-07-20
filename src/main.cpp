@@ -8,6 +8,7 @@
 #include "../include/neighbor.h"
 #include "../include/exchange.h"
 #include "../include/ising2.h"
+#include "../include/clock2.h"
 #include "../include/disorder_cooling.h"
 
 
@@ -29,12 +30,13 @@ void test_neighbor_3D();
 void test_exchange_2D();
 void test_ising_clean(const std::array<double, N_pts> &T);
 void test_ising_disorder(const std::array<double, N_pts> &T);
+void test_clock_clean(const std::array<double, N_pts> &T);
+void test_clock_disorder(const std::array<double, N_pts> &T);
 
 
 /*-------------------------------------------------------------------------------------------------
  * MAIN
  *-----------------------------------------------------------------------------------------------*/
-//int main(int argc, char **argv)
 int main(void)
 {
     std::cout << "Testing Neighbor class implementation for correct neighbor indices\n";
@@ -56,6 +58,10 @@ int main(void)
     std::cout << "\nTesting 2D Ising Model with L = 4.\n";
     test_ising_clean(T);
     test_ising_disorder(T);
+
+    std::cout << "\nTesting 2D Clock Model with L = 4.\n";
+    test_clock_clean(T);
+    test_clock_disorder(T);
 
     return 0;
 }
@@ -243,5 +249,51 @@ void test_ising_disorder(const std::array<double, N_pts> &T)
     std::cout << "  Running 2D Ising Model (disorder)... ";
     auto E = compute_energy(T, ising, delta, n_run);
     compute_entropy(E, T, "2D_ising_disorder.txt");
+    std::cout << "Done\n";
+}
+
+
+/* test_clock_clean()
+ * Performs Monte carlo simulation for 2D clean system.
+ *
+ * Implament 3D when ready.
+ */
+void test_clock_clean(const std::array<double, N_pts> &T)
+{
+    Clock2 clock2(4, 2), clock20(4, 20);
+    clock2.set_run_param(30000, 50000);
+    clock20.set_run_param(30000, 50000);
+
+    std::cout << "  Running 2D Clock model (clean) with 2 spins...  ";
+    auto E2 = compute_energy(T, clock2);
+    compute_entropy(E2, T, "2D_clock_clean_q=2.txt");
+    std::cout << "Done\n";
+
+    std::cout << "  Running 2D Clock model (clean) with 20 spins...  ";
+    auto E20 = compute_energy(T, clock20);
+    compute_entropy(E20, T, "2D_clock_clean_q=20.txt");
+    std::cout << "Done\n";
+}
+
+
+/* test_clock_disorder()
+ * Performs Monte carlo simulation for 2D disorder system.
+ *
+ * Implament 3D when ready.
+ */
+void test_clock_disorder(const std::array<double, N_pts> &T)
+{
+    Clock2 clock2(4, 2), clock20(4, 20);
+    clock2.set_run_param(30000, 50000);
+    clock20.set_run_param(30000, 50000);
+
+    std::cout << "  Running 2D Clock model (disorder) with 2 spins... ";
+    auto E2 = compute_energy(T, clock2, delta, n_run);
+    compute_entropy(E2, T, "2D_clock_disorder_q=2.txt");
+    std::cout << "Done\n";
+
+    std::cout << "  Running 2D Clock model (disorder) with 20 spins... ";
+    auto E20 = compute_energy(T, clock20, delta, n_run);
+    compute_entropy(E20, T, "2D_clock_disorder_q=20.txt");
     std::cout << "Done\n";
 }
