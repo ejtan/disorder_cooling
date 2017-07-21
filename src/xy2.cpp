@@ -26,3 +26,12 @@ void XY2::set_spin()
 {
     Clock2::set_spin();
 }
+
+
+/* sweep_energy()
+ * Calls clock mode sweep_energy()
+ */
+double XY2::sweep_energy(double beta, std::mt19937 &engine)
+{
+    return Clock2::sweep_energy(beta, engine);
+}
