@@ -17,3 +17,12 @@ XY2::XY2(const int L) : Clock2(L, 50)
 XY2::XY2(const XY2 &rhs) : Clock2(rhs)
 {
 }
+
+
+/* set_spin()
+ * Calss clock model set_spin()
+ */
+void XY2::set_spin()
+{
+    Clock2::set_spin();
+}
