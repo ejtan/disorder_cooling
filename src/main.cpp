@@ -9,6 +9,7 @@
 #include "../include/exchange.h"
 #include "../include/ising2.h"
 #include "../include/clock2.h"
+#include "../include/xy2.h"
 #include "../include/disorder_cooling.h"
 
 
@@ -32,6 +33,7 @@ void test_ising_clean(const std::array<double, N_pts> &T);
 void test_ising_disorder(const std::array<double, N_pts> &T);
 void test_clock_clean(const std::array<double, N_pts> &T);
 void test_clock_disorder(const std::array<double, N_pts> &T);
+void test_xy(const std::array<double, N_pts> &T);
 
 
 /*-------------------------------------------------------------------------------------------------
@@ -55,6 +57,7 @@ int main(void)
             return dT * static_cast<double>(curr);
     });
 
+    /*
     std::cout << "\nTesting 2D Ising Model with L = 4.\n";
     test_ising_clean(T);
     test_ising_disorder(T);
@@ -62,6 +65,10 @@ int main(void)
     std::cout << "\nTesting 2D Clock Model with L = 4.\n";
     test_clock_clean(T);
     test_clock_disorder(T);
+    */
+
+    std::cout << "\nTesting 2D XY Mdoel with L = 4.\n";
+    test_xy(T);
 
     return 0;
 }
@@ -295,5 +302,22 @@ void test_clock_disorder(const std::array<double, N_pts> &T)
     std::cout << "  Running 2D Clock model (disorder) with 20 spins... ";
     auto E20 = compute_energy(T, clock20, delta, n_run);
     compute_entropy(E20, T, 20, "2D_clock_disorder_q=20.txt");
+    std::cout << "Done\n";
+}
+
+
+void test_xy(const std::array<double, N_pts> &T)
+{
+    XY2 xy(4);
+    xy.set_run_param(30000, 50000);
+
+    std::cout << "  Running 2D XY model (clean)... ";
+    auto E_clean = compute_energy(T, xy);
+    compute_entropy(E_clean, T, 50, "2D_xy_clean.txt");
+    std::cout << "Done\n";
+
+    std::cout << "  Running 2D XY model (disorder)... ";
+    auto E_disorder= compute_energy(T, xy, delta, n_run);
+    compute_entropy(E_disorder, T, 50, "2D_xy_disorder.txt");
     std::cout << "Done\n";
 }
