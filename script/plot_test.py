@@ -29,7 +29,7 @@ S_clock20_disorder = np.loadtxt(src_dir + "2D_clock_disorder_q=20.txt", usecols=
 S_xy_clean         = np.loadtxt(src_dir + "2D_xy_clean.txt", usecols=1)
 S_xy_disorder      = np.loadtxt(src_dir + "2D_xy_disorder.txt", usecols=1)
 
-plt.figure(figsize=(18, 16), dpi=80, facecolor='w', edgecolor='k')
+plt.figure(figsize=(20, 16), dpi=80, facecolor='w', edgecolor='k')
 plt.rcParams.update({'font.size':12})
 
 plt.subplot(221)
@@ -77,4 +77,4 @@ plt.ylabel(r"S [$k_B$]")
 plt.title("Entropy of 2D XY Model")
 plt.legend(["Clean ", r"Disorder With $\Delta = 5$"])
 
-plt.show()
+plt.savefig('../plot/test_plots.pdf', bbox_inches='tight')
