@@ -20,7 +20,7 @@ std::array<TT, N> compute_energy(const std::array<TT, N> &T, Model &model,
         double delta, int n_run);
 
 template <typename TT, size_t N>
-void compute_entropy(const std::array<TT, N> &E, const std::array<TT, N> &T,
+void compute_entropy(const std::array<TT, N> &E, const std::array<TT, N> &T, int n_spin,
         const std::string &filename);
 
 

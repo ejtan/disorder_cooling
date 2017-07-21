@@ -231,7 +231,7 @@ void test_ising_clean(const std::array<double, N_pts> &T)
 
     std::cout << "  Running 2D Ising Model (clean)... ";
     auto E = compute_energy(T, ising);
-    compute_entropy(E, T, "2D_ising_clean.txt");
+    compute_entropy(E, T, 2, "2D_ising_clean.txt");
     std::cout << "Done\n";
 }
 
@@ -248,7 +248,7 @@ void test_ising_disorder(const std::array<double, N_pts> &T)
 
     std::cout << "  Running 2D Ising Model (disorder)... ";
     auto E = compute_energy(T, ising, delta, n_run);
-    compute_entropy(E, T, "2D_ising_disorder.txt");
+    compute_entropy(E, T, 2, "2D_ising_disorder.txt");
     std::cout << "Done\n";
 }
 
@@ -266,12 +266,12 @@ void test_clock_clean(const std::array<double, N_pts> &T)
 
     std::cout << "  Running 2D Clock model (clean) with 2 spins...  ";
     auto E2 = compute_energy(T, clock2);
-    compute_entropy(E2, T, "2D_clock_clean_q=2.txt");
+    compute_entropy(E2, T, 2, "2D_clock_clean_q=2.txt");
     std::cout << "Done\n";
 
     std::cout << "  Running 2D Clock model (clean) with 20 spins...  ";
     auto E20 = compute_energy(T, clock20);
-    compute_entropy(E20, T, "2D_clock_clean_q=20.txt");
+    compute_entropy(E20, T, 20, "2D_clock_clean_q=20.txt");
     std::cout << "Done\n";
 }
 
@@ -289,11 +289,11 @@ void test_clock_disorder(const std::array<double, N_pts> &T)
 
     std::cout << "  Running 2D Clock model (disorder) with 2 spins... ";
     auto E2 = compute_energy(T, clock2, delta, n_run);
-    compute_entropy(E2, T, "2D_clock_disorder_q=2.txt");
+    compute_entropy(E2, T, 2, "2D_clock_disorder_q=2.txt");
     std::cout << "Done\n";
 
     std::cout << "  Running 2D Clock model (disorder) with 20 spins... ";
     auto E20 = compute_energy(T, clock20, delta, n_run);
-    compute_entropy(E20, T, "2D_clock_disorder_q=20.txt");
+    compute_entropy(E20, T, 20, "2D_clock_disorder_q=20.txt");
     std::cout << "Done\n";
 }

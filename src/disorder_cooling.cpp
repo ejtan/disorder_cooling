@@ -58,11 +58,11 @@ std::array<TT, N> compute_energy(const std::array<TT, N> &T, Model &model,
  * There will be N-1 points in the output file due to the integration.
  */
 template <typename TT, size_t N>
-void compute_entropy(const std::array<TT, N> &E, const std::array<TT, N> &T,
+void compute_entropy(const std::array<TT, N> &E, const std::array<TT, N> &T, int n_spin,
         const std::string &filename)
 {
     std::ofstream of(filename);
-    const double ln2 = 0.693147180559945;
+    const double ln = log(n_spin);
 
     std::array<TT, N> integral_values;
 
@@ -70,7 +70,7 @@ void compute_entropy(const std::array<TT, N> &E, const std::array<TT, N> &T,
         integral_values[i] = E[i] / (T[i] * T[i]);
 
     for (size_t i = 0; i < N - 1; i++)
-        of << T[i] << ' ' << ln2 + (E[i] / T[i]) - trapezoid(T, integral_values, i) << '\n';
+        of << T[i] << ' ' << ln + (E[i] / T[i]) - trapezoid(T, integral_values, i) << '\n';
 
     of.close();
 }
