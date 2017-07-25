@@ -1,8 +1,8 @@
-#include <cmath>
-#include <iostream>
-
+#include <boost/simd/exponential.hpp>
+#include <boost/simd/function/multiplies.hpp>
 #include "../include/clock2.h"
 
+namespace bs = boost::simd;
 
 /*-------------------------------------------------------------------------------------------------
  * PUBLIC METHOD
@@ -24,7 +24,7 @@ void Clock2::sweep_lattice_clean(float beta, std::mt19937 &engine)
         } while(new_angle == spin[pos]);
 
         // Compute the energy change
-        double delta_E = 0.0;
+        float delta_E = 0.0;
         for (size_t i = 0; i < n_neigh; i++) {
             size_t neigh_angle = spin[neigh[pos].neighbor[i]];
             size_t old_angle   = spin[pos];
@@ -35,7 +35,9 @@ void Clock2::sweep_lattice_clean(float beta, std::mt19937 &engine)
             delta_E += cos_val[old_idx] - cos_val[new_idx];
         } // Loop to compute total cos value
 
-        if (rand0(engine) < exp(-beta * delta_E))
+        // Accept / reject new spin
+        // Used SIMD optimized version of exp(-beta * delta_E)
+        if (rand0(engine) < bs::exp(bs::multiplies(-beta, delta_E)))
             spin[pos] = new_angle;
     } // Loop over sites
 }
@@ -57,7 +59,7 @@ void Clock2::sweep_lattice_disorder(float beta, std::mt19937 &engine)
         } while(new_angle == spin[pos]);
 
         // Compute energy change
-        double delta_E = 0.0;
+        float delta_E = 0.0;
         for (size_t i = 0; i < n_neigh; i++) {
             size_t neigh_angle = spin[neigh[pos].neighbor[i]];
             size_t old_angle   = spin[pos];
@@ -68,7 +70,10 @@ void Clock2::sweep_lattice_disorder(float beta, std::mt19937 &engine)
             delta_E += J[pos].J_arr[i] * (cos_val[old_idx] - cos_val[new_idx]);
         }
 
-        if (rand0(engine) < exp(-beta * delta_E))
+
+        // Accept / reject new spin
+        // Used SIMD optimized version of exp(-beta * delta_E)
+        if (rand0(engine) < bs::exp(bs::multiplies(-beta, delta_E)))
             spin[pos] = new_angle;
     }
 }
