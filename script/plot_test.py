@@ -21,13 +21,13 @@ for filename in os.listdir("../"):
 
 # Load all data. Note that T is the same for all plots so it needs to be loaded once
 T, S_ising_clean   = np.loadtxt(src_dir + "2D_ising_clean.txt", unpack=True)
-S_ising_disorder   = np.loadtxt(src_dir + "2D_ising_disorder.txt", usecols=1)
-S_clock2_clean     = np.loadtxt(src_dir + "2D_clock_clean_q=2.txt", usecols=1)
-S_clock2_disorder  = np.loadtxt(src_dir + "2D_clock_disorder_q=2.txt", usecols=1)
-S_clock20_clean    = np.loadtxt(src_dir + "2D_clock_clean_q=20.txt", usecols=1)
-S_clock20_disorder = np.loadtxt(src_dir + "2D_clock_disorder_q=20.txt", usecols=1)
-S_xy_clean         = np.loadtxt(src_dir + "2D_xy_clean.txt", usecols=1)
-S_xy_disorder      = np.loadtxt(src_dir + "2D_xy_disorder.txt", usecols=1)
+S_ising_disorder   = np.loadtxt(src_dir + "2D_ising_disorder.txt", usecols=(1,))
+S_clock2_clean     = np.loadtxt(src_dir + "2D_clock_clean_q=2.txt", usecols=(1,))
+S_clock2_disorder  = np.loadtxt(src_dir + "2D_clock_disorder_q=2.txt", usecols=(1,))
+S_clock20_clean    = np.loadtxt(src_dir + "2D_clock_clean_q=20.txt", usecols=(1,))
+S_clock20_disorder = np.loadtxt(src_dir + "2D_clock_disorder_q=20.txt", usecols=(1,))
+S_xy_clean         = np.loadtxt(src_dir + "2D_xy_clean.txt", usecols=(1,))
+S_xy_disorder      = np.loadtxt(src_dir + "2D_xy_disorder.txt", usecols=(1,))
 
 plt.figure(figsize=(20, 16), dpi=80, facecolor='w', edgecolor='k')
 plt.rcParams.update({'font.size':12})
