@@ -35,3 +35,7 @@
 build/
 bin/*
 plot/
+
+# Ignore data files
+*.txt
+*.dat
