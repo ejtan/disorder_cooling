@@ -4,11 +4,12 @@
 
 #include <vector>
 #include <random>
+
 #include "model3.h"
 
 
 /* class : Ising3
- * 2D Ising model class. Handles setting spin lattice and perfroming Monte Carlo sweeps using the
+ * 3D Ising model class. Handles setting spin lattice and perfroming Monte Carlo sweeps using the
  * Metropolis Algorithm.
  */
 class Ising3 : public Model3

@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <random>
+
 #include "neighbor.h"
 #include "exchange.h"
 
