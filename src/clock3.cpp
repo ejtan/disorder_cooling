@@ -131,14 +131,17 @@ double Clock3::sweep_energy(double beta, std::mt19937 &engine)
             sweep_lattice_clean(beta, engine);
 
             for (size_t j = 0; j < size; j++) {
+                // Compute energy using the 1, 2, and 4 neighboring bonds
                 size_t pos_angle = spin[j];
                 size_t neigh1    = spin[neigh[j].neighbor[1]];
                 size_t neigh2    = spin[neigh[j].neighbor[2]];
+                size_t neigh3    = spin[neigh[j].neighbor[4]];
 
                 size_t E_idx1 = (pos_angle - neigh1 + q) % q;
                 size_t E_idx2 = (pos_angle - neigh2 + q) % q;
+                size_t E_idx3 = (pos_angle - neigh3 + q) % q;
 
-                E_tot += -(cos_val[E_idx1] + cos_val[E_idx2]);
+                E_tot += -(cos_val[E_idx1] + cos_val[E_idx2] + cos_val[E_idx3]);
             } // Compute energy of lattice
         } // Measurement sweeps
     } else {

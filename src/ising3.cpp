@@ -101,9 +101,11 @@ double Ising3::sweep_energy(double beta, std::mt19937 &engine)
         for (size_t i = 0; i < measure; i++) {
             sweep_lattice_clean(beta, engine);
 
+            // Compute the Total energy of lattice with 0, 1, and 4 bonds
             #pragma omp simd reduction(+:E_tot)
             for (size_t j = 0; j < size; j++)
-                E_tot += -spin[j] * (spin[neigh[j].neighbor[0]] + spin[neigh[j].neighbor[1]]);
+                E_tot += -spin[j] * (spin[neigh[j].neighbor[0]] + spin[neigh[j].neighbor[1]] +
+                                     spin[neigh[j].neighbor[4]]);
         } // Perform measurement sweeps
     } else {
         for (size_t i = 0; i < warmup; i++)
@@ -112,9 +114,11 @@ double Ising3::sweep_energy(double beta, std::mt19937 &engine)
         for (size_t i = 0; i < measure; i++) {
             sweep_lattice_disorder(beta, engine);
 
+            // Compute the Total energy of lattice with 0, 1, and 4 bonds
             for (size_t j = 0; j < size; j++)
                 E_tot += -spin[j] * (J[j].J_arr[0] * spin[neigh[j].neighbor[0]] +
-                                     J[j].J_arr[1] * spin[neigh[j].neighbor[1]]);
+                                     J[j].J_arr[1] * spin[neigh[j].neighbor[1]] +
+                                     J[j].J_arr[4] * spin[neigh[j].neighbor[4]]);
         } // Perform measurement sweeps
     } // Choose wheather to sweep with disorder or no disorder
 
