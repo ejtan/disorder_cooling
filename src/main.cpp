@@ -10,6 +10,7 @@
 #include "../include/ising2.h"
 #include "../include/clock2.h"
 #include "../include/xy2.h"
+#include "../include/ising3.h"
 #include "../include/disorder_cooling.h"
 
 
@@ -29,6 +30,7 @@ const double delta = 5.0;
 void test_neighbor_2D();
 void test_neighbor_3D();
 void test_exchange_2D();
+void test_exchange_3D();
 void test_ising(const std::array<double, N_pts> &T);
 void test_clock(const std::array<double, N_pts> &T);
 void test_xy(const std::array<double, N_pts> &T);
@@ -45,6 +47,8 @@ int main(void)
 
     std::cout << "\nTesting for equality of exchange table\n";
     test_exchange_2D();
+    std::cout << "\n";
+    test_exchange_3D();
 
     // Initalize a temperature array
     std::array<double, N_pts> T;
@@ -102,6 +106,50 @@ void test_exchange_2D()
 
             if (fabs(bond0 - bond2) > std::numeric_limits<double>::epsilon() ||
                     fabs(bond1 - bond3) > std::numeric_limits<double>::epsilon()) {
+                isEqual = false;
+                break;
+            } // Check if the bonds are the same
+        } // Loop over sites
+
+        if (isEqual) std::cout << "Passed\n";
+        else         std::cout << "Failed\n";
+    } // Loop over several tests
+}
+
+
+/* test_exchange_3D()
+ */
+void test_exchange_3D()
+{
+    std::array<Neighbor<3>, L * L> neigh;
+    Ising3 model(L);
+
+    for (size_t i = 0; i < L * L; i++)
+        neigh[i].set_neighbors(i, L);
+
+    for (int i = 0; i < 5; i++) {
+        std::cout << "  Testing 3D Bonds (test " << i + 1 << ")... ";
+
+        std::random_device rd;
+        std::mt19937 engine(rd());
+        std::uniform_real_distribution<double> rand0(0.0, 20.0); // Choose a delta within this range
+
+        model.set_exchange(rand0(engine));
+
+        auto J = model.get_exchange();
+        bool isEqual = true;
+
+        for (int i = 0; i < L * L; i++) {
+            double bond0 = J[i].J_arr[0];
+            double bond2 = J[neigh[i].neighbor[0]].J_arr[2];
+            double bond1 = J[i].J_arr[1];
+            double bond3 = J[neigh[i].neighbor[1]].J_arr[3];
+            double bond4 = J[i].J_arr[4];
+            double bond5 = J[neigh[i].neighbor[4]].J_arr[5];
+
+            if (fabs(bond0 - bond2) > std::numeric_limits<double>::epsilon() ||
+                    fabs(bond1 - bond3) > std::numeric_limits<double>::epsilon() ||
+                    fabs(bond4 - bond5) > std::numeric_limits<double>::epsilon()) {
                 isEqual = false;
                 break;
             } // Check if the bonds are the same
