@@ -292,12 +292,12 @@ void test_ising(const std::array<double, N_pts> &T)
 
     std::cout << "  Running 3D Ising Model (clean)... ";
     E_clean = compute_energy(T, ising3);
-    compute_entropy(E_clean, T, 2, "2D_ising_clean.txt");
+    compute_entropy(E_clean, T, 2, "3D_ising_clean.txt");
     std::cout << "Done\n";
 
     std::cout << "  Running 3D Ising Model (disorder)... ";
     E_disorder = compute_energy(T, ising3, delta, n_run);
-    compute_entropy(E_disorder, T, 2, "2D_ising_disorder.txt");
+    compute_entropy(E_disorder, T, 2, "3D_ising_disorder.txt");
     std::cout << "Done\n";
 }
 
@@ -336,22 +336,22 @@ void test_clock(const std::array<double, N_pts> &T)
 
     std::cout << "  Running 3D Clock model (clean) with 2 spins...  ";
     E2_clean = compute_energy(T, clock3_2);
-    compute_entropy(E2_clean, T, 2, "2D_clock_clean_q=2.txt");
+    compute_entropy(E2_clean, T, 2, "3D_clock_clean_q=2.txt");
     std::cout << "Done\n";
 
     std::cout << "  Running 3D Clock model (disorder) with 2 spins... ";
     E2_disorder = compute_energy(T, clock3_2, delta, n_run);
-    compute_entropy(E2_disorder, T, 2, "2D_clock_disorder_q=2.txt");
+    compute_entropy(E2_disorder, T, 2, "3D_clock_disorder_q=2.txt");
     std::cout << "Done\n";
 
     std::cout << "  Running 3D Clock model (clean) with 20 spins...  ";
     E20_clean = compute_energy(T, clock3_20);
-    compute_entropy(E20_clean, T, 20, "2D_clock_clean_q=20.txt");
+    compute_entropy(E20_clean, T, 20, "3D_clock_clean_q=20.txt");
     std::cout << "Done\n";
 
     std::cout << "  Running 3D Clock model (disorder) with 20 spins... ";
     E20_disorder = compute_energy(T, clock3_20, delta, n_run);
-    compute_entropy(E20_disorder, T, 20, "2D_clock_disorder_q=20.txt");
+    compute_entropy(E20_disorder, T, 20, "3D_clock_disorder_q=20.txt");
     std::cout << "Done\n";
 }
 
@@ -378,11 +378,11 @@ void test_xy(const std::array<double, N_pts> &T)
 
     std::cout << "  Running 3D XY model (clean)... ";
     E_clean = compute_energy(T, xy3);
-    compute_entropy(E_clean, T, 50, "2D_xy_clean.txt");
+    compute_entropy(E_clean, T, 50, "3D_xy_clean.txt");
     std::cout << "Done\n";
 
     std::cout << "  Running 3D XY model (disorder)... ";
     E_disorder= compute_energy(T, xy3, delta, n_run);
-    compute_entropy(E_disorder, T, 50, "2D_xy_disorder.txt");
+    compute_entropy(E_disorder, T, 50, "3D_xy_disorder.txt");
     std::cout << "Done\n";
 }
