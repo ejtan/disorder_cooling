@@ -11,6 +11,8 @@
 #include "../include/clock2.h"
 #include "../include/xy2.h"
 #include "../include/ising3.h"
+#include "../include/clock3.h"
+#include "../include/xy3.h"
 #include "../include/disorder_cooling.h"
 
 
@@ -270,21 +272,31 @@ void test_neighbor_3D()
 
 /* test_ising()
  * Performs Monte carlo simulation for 2D clean system.
- *
- * Implament 3D when ready.
  */
 void test_ising(const std::array<double, N_pts> &T)
 {
-    Ising2 ising(4);
-    ising.set_run_param(30000, 50000);
+    Ising2 ising2(4);
+    Ising3 ising3(4);
+    ising2.set_run_param(30000, 50000);
+    ising3.set_run_param(30000, 50000);
 
     std::cout << "  Running 2D Ising Model (clean)... ";
-    auto E_clean = compute_energy(T, ising);
+    auto E_clean = compute_energy(T, ising2);
     compute_entropy(E_clean, T, 2, "2D_ising_clean.txt");
     std::cout << "Done\n";
 
     std::cout << "  Running 2D Ising Model (disorder)... ";
-    auto E_disorder = compute_energy(T, ising, delta, n_run);
+    auto E_disorder = compute_energy(T, ising2, delta, n_run);
+    compute_entropy(E_disorder, T, 2, "2D_ising_disorder.txt");
+    std::cout << "Done\n";
+
+    std::cout << "  Running 3D Ising Model (clean)... ";
+    E_clean = compute_energy(T, ising3);
+    compute_entropy(E_clean, T, 2, "2D_ising_clean.txt");
+    std::cout << "Done\n";
+
+    std::cout << "  Running 3D Ising Model (disorder)... ";
+    E_disorder = compute_energy(T, ising3, delta, n_run);
     compute_entropy(E_disorder, T, 2, "2D_ising_disorder.txt");
     std::cout << "Done\n";
 }
@@ -292,32 +304,53 @@ void test_ising(const std::array<double, N_pts> &T)
 
 /* test_clock()
  * Performs Monte carlo simulation for 2D clean system.
- *
- * Implament 3D when ready.
  */
 void test_clock(const std::array<double, N_pts> &T)
 {
-    Clock2 clock2(4, 2), clock20(4, 20);
-    clock2.set_run_param(30000, 50000);
-    clock20.set_run_param(30000, 50000);
+    Clock2 clock2_2(4, 2), clock2_20(4, 20);
+    Clock3 clock3_2(4, 2), clock3_20(4, 20);
+    clock2_2.set_run_param(30000, 50000);
+    clock2_20.set_run_param(30000, 50000);
+    clock3_2.set_run_param(30000, 50000);
+    clock3_20.set_run_param(30000, 50000);
 
     std::cout << "  Running 2D Clock model (clean) with 2 spins...  ";
-    auto E2_clean = compute_energy(T, clock2);
+    auto E2_clean = compute_energy(T, clock2_2);
     compute_entropy(E2_clean, T, 2, "2D_clock_clean_q=2.txt");
     std::cout << "Done\n";
 
     std::cout << "  Running 2D Clock model (disorder) with 2 spins... ";
-    auto E2_disorder = compute_energy(T, clock2, delta, n_run);
+    auto E2_disorder = compute_energy(T, clock2_2, delta, n_run);
     compute_entropy(E2_disorder, T, 2, "2D_clock_disorder_q=2.txt");
     std::cout << "Done\n";
 
     std::cout << "  Running 2D Clock model (clean) with 20 spins...  ";
-    auto E20_clean = compute_energy(T, clock20);
+    auto E20_clean = compute_energy(T, clock2_20);
     compute_entropy(E20_clean, T, 20, "2D_clock_clean_q=20.txt");
     std::cout << "Done\n";
 
     std::cout << "  Running 2D Clock model (disorder) with 20 spins... ";
-    auto E20_disorder = compute_energy(T, clock20, delta, n_run);
+    auto E20_disorder = compute_energy(T, clock2_20, delta, n_run);
+    compute_entropy(E20_disorder, T, 20, "2D_clock_disorder_q=20.txt");
+    std::cout << "Done\n";
+
+    std::cout << "  Running 3D Clock model (clean) with 2 spins...  ";
+    E2_clean = compute_energy(T, clock3_2);
+    compute_entropy(E2_clean, T, 2, "2D_clock_clean_q=2.txt");
+    std::cout << "Done\n";
+
+    std::cout << "  Running 3D Clock model (disorder) with 2 spins... ";
+    E2_disorder = compute_energy(T, clock3_2, delta, n_run);
+    compute_entropy(E2_disorder, T, 2, "2D_clock_disorder_q=2.txt");
+    std::cout << "Done\n";
+
+    std::cout << "  Running 3D Clock model (clean) with 20 spins...  ";
+    E20_clean = compute_energy(T, clock3_20);
+    compute_entropy(E20_clean, T, 20, "2D_clock_clean_q=20.txt");
+    std::cout << "Done\n";
+
+    std::cout << "  Running 3D Clock model (disorder) with 20 spins... ";
+    E20_disorder = compute_energy(T, clock3_20, delta, n_run);
     compute_entropy(E20_disorder, T, 20, "2D_clock_disorder_q=20.txt");
     std::cout << "Done\n";
 }
@@ -325,21 +358,31 @@ void test_clock(const std::array<double, N_pts> &T)
 
 /* test_xy()
  * Performs Monte carlo simulation for 2D clean system.
- *
- * Implament 3D when ready.
  */
 void test_xy(const std::array<double, N_pts> &T)
 {
-    XY2 xy(4);
-    xy.set_run_param(30000, 50000);
+    XY2 xy2(4);
+    XY3 xy3(4);
+    xy2.set_run_param(30000, 50000);
+    xy3.set_run_param(30000, 50000);
 
     std::cout << "  Running 2D XY model (clean)... ";
-    auto E_clean = compute_energy(T, xy);
+    auto E_clean = compute_energy(T, xy2);
     compute_entropy(E_clean, T, 50, "2D_xy_clean.txt");
     std::cout << "Done\n";
 
     std::cout << "  Running 2D XY model (disorder)... ";
-    auto E_disorder= compute_energy(T, xy, delta, n_run);
+    auto E_disorder= compute_energy(T, xy2, delta, n_run);
+    compute_entropy(E_disorder, T, 50, "2D_xy_disorder.txt");
+    std::cout << "Done\n";
+
+    std::cout << "  Running 3D XY model (clean)... ";
+    E_clean = compute_energy(T, xy3);
+    compute_entropy(E_clean, T, 50, "2D_xy_clean.txt");
+    std::cout << "Done\n";
+
+    std::cout << "  Running 3D XY model (disorder)... ";
+    E_disorder= compute_energy(T, xy3, delta, n_run);
     compute_entropy(E_disorder, T, 50, "2D_xy_disorder.txt");
     std::cout << "Done\n";
 }
