@@ -78,4 +78,65 @@ ax4.set_ylabel(r"S [$k_B$]")
 ax4.set_title("Entropy of 2D XY Model")
 ax4.legend(["Clean ", r"Disorder With $\Delta = 5$"])
 
-fig1.savefig('../plot/test_plots.pdf', bbox_inches='tight')
+fig1.savefig('../plot/entropy2_test.pdf', bbox_inches='tight')
+
+# Load 3D data. We can use the same T as the 2D data.
+S_ising3_clean       = np.loadtxt(src_dir + "3D_ising_clean.txt", usecols=(1,))
+S_ising3_disorder    = np.loadtxt(src_dir + "3D_ising_disorder.txt", usecols=(1,))
+S_clock3_2_clean     = np.loadtxt(src_dir + "3D_clock_clean_q=2.txt", usecols=(1,))
+S_clock3_2_disorder  = np.loadtxt(src_dir + "3D_clock_disorder_q=2.txt", usecols=(1,))
+S_clock3_20_clean    = np.loadtxt(src_dir + "3D_clock_clean_q=20.txt", usecols=(1,))
+S_clock3_20_disorder = np.loadtxt(src_dir + "3D_clock_disorder_q=20.txt", usecols=(1,))
+S_xy3_clean          = np.loadtxt(src_dir + "3D_xy_clean.txt", usecols=(1,))
+S_xy3_disorder       = np.loadtxt(src_dir + "3D_xy_disorder.txt", usecols=(1,))
+
+fig2 = plt.figure(figsize=(20, 16), dpi=80, facecolor='w', edgecolor='k')
+plt.rcParams.update({'font.size':12})
+
+ax1 = fig2.add_subplot(221)
+ax1.plot(T, S_ising3_clean)
+ax1.plot(T, S_ising3_disotder)
+ax1.set_xlim([0, 5])
+ax1.set_ylim([0, 1])
+ax1.set_xlabel(r"T [J / $k_B$]")
+ax1.set_ylabel(r"S [$k_B$]")
+ax1.set_title("Entropy of 3D Ising Model")
+ax1.legend(["Clean system", r"Disorder system with $\Delta = 5$"])
+
+
+ax2 = fig2.agg_subplot(222)
+ax2.plot(T, S_ising3_clean)
+ax2.plot(T, S_ising3_disorder)
+ax2.plot(T, S_clock3_2_clean)
+ax2.plot(T, S_clock3_2_disorder)
+ax2.set_ylim([0, 1])
+ax2.set_xlim([0, 5])
+ax2.set_xlabel(r"T [J / $k_B$]")
+ax2.set_ylabel(r"S [$k_B$]")
+ax2.set_title("Comparsion of Entropy of 3D Ising and Clock (2 spin)")
+ax2.legend(["Ising Clean", r"Ising Disorder ($\Delta = 5$)",
+         "Clock Clean (2 spins)", r"Clock Disorder ($\Delta = 5$)"])
+
+
+ax3 = fig2.add_subplot(223)
+ax3.plot(T, S_clock3_20_clean)
+ax3.plot(T, S_clock3_20_disorder)
+ax3.set_ylim([1.5, 3.0])
+ax3.set_xlim([0, 5])
+ax3.set_xlabel(r"T [J / $k_B$]")
+ax3.set_ylabel(r"S [$k_B$]")
+ax3.set_title("Entropy of 3D Clock Model With 20 Spins")
+ax3.legend(["Clean ", r"Disorder With $\Delta = 5$"])
+
+
+ax4 = fig1.add_subplot(224)
+ax4.plot(T, S_xy3_clean)
+ax4.plot(T, S_xy3_disorder)
+ax4.set_ylim([2.5, 5.0])
+ax4.set_xlim([0, 5])
+ax4.set_xlabel(r"T [J / $k_B$]")
+ax4.set_ylabel(r"S [$k_B$]")
+ax4.set_title("Entropy of 3D XY Model")
+ax4.legend(["Clean ", r"Disorder With $\Delta = 5$"])
+
+fig2.savefig('../plot/entropy3_test.pdf', bbox_inches='tight')
