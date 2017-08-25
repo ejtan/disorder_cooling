@@ -23,6 +23,9 @@ template <typename TT, size_t N>
 void compute_entropy(const std::array<TT, N> &E, const std::array<TT, N> &T, int n_spin,
         const std::string &filename);
 
+template <typename TT, size_t N>
+void write_energy(const std::array<TT, N> &E, const std::array<TT, N> &T,
+        const std::string &filename);
 
 /*-------------------------------------------------------------------------------------------------
  * Intended Helper functions

@@ -76,6 +76,22 @@ void compute_entropy(const std::array<TT, N> &E, const std::array<TT, N> &T, int
 }
 
 
+/* write_energy()
+ * Writes the energy to a file.
+ */
+template <typename TT, size_t N>
+void write_energy(const std::array<TT, N> &E, const std::array<TT, N> &T,
+        const std::string &filename)
+{
+    std::ofstream of(filename);
+
+    for (size_t i = 0; i < N; i++)
+        of << T[i] << ' ' << E[i] << '\n';
+
+    of.close();
+}
+
+
 /*-------------------------------------------------------------------------------------------------
  * Intended Helper functions
  *-----------------------------------------------------------------------------------------------*/
