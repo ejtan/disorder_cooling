@@ -95,7 +95,7 @@ plt.rcParams.update({'font.size':12})
 
 ax1 = fig2.add_subplot(221)
 ax1.plot(T, S_ising3_clean)
-ax1.plot(T, S_ising3_disotder)
+ax1.plot(T, S_ising3_disorder)
 ax1.set_xlim([0, 5])
 ax1.set_ylim([0, 1])
 ax1.set_xlabel(r"T [J / $k_B$]")
@@ -104,7 +104,7 @@ ax1.set_title("Entropy of 3D Ising Model")
 ax1.legend(["Clean system", r"Disorder system with $\Delta = 5$"])
 
 
-ax2 = fig2.agg_subplot(222)
+ax2 = fig2.add_subplot(222)
 ax2.plot(T, S_ising3_clean)
 ax2.plot(T, S_ising3_disorder)
 ax2.plot(T, S_clock3_2_clean)
@@ -129,7 +129,7 @@ ax3.set_title("Entropy of 3D Clock Model With 20 Spins")
 ax3.legend(["Clean ", r"Disorder With $\Delta = 5$"])
 
 
-ax4 = fig1.add_subplot(224)
+ax4 = fig2.add_subplot(224)
 ax4.plot(T, S_xy3_clean)
 ax4.plot(T, S_xy3_disorder)
 ax4.set_ylim([2.5, 5.0])
