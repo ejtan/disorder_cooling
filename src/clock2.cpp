@@ -1,8 +1,7 @@
-#include <boost/simd/exponential.hpp>
-#include <boost/simd/function/multiplies.hpp>
+#include <cmath>
+
 #include "../include/clock2.h"
 
-namespace bs = boost::simd;
 
 /*-------------------------------------------------------------------------------------------------
  * PUBLIC METHOD
@@ -36,8 +35,7 @@ void Clock2::sweep_lattice_clean(float beta, std::mt19937 &engine)
         } // Loop to compute total cos value
 
         // Accept / reject new spin
-        // Used SIMD optimized version of exp(-beta * delta_E)
-        if (rand0(engine) < bs::exp(bs::multiplies(-beta, delta_E)))
+        if (rand0(engine) < exp(-beta * delta_E))
             spin[pos] = new_angle;
     } // Loop over sites
 }
@@ -72,8 +70,7 @@ void Clock2::sweep_lattice_disorder(float beta, std::mt19937 &engine)
 
 
         // Accept / reject new spin
-        // Used SIMD optimized version of exp(-beta * delta_E)
-        if (rand0(engine) < bs::exp(bs::multiplies(-beta, delta_E)))
+        if (rand0(engine) < exp(-beta * delta_E))
             spin[pos] = new_angle;
     }
 }

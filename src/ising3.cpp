@@ -1,6 +1,4 @@
-#include <boost/simd/exponential.hpp>
-#include <boost/simd/function/multiplies.hpp>
-
+#include <cmath>
 #include "../include/ising3.h"
 
 
@@ -14,8 +12,6 @@
  */
 void Ising3::sweep_lattice_clean(float beta, std::mt19937 &engine)
 {
-    namespace bs = boost::simd;
-
     for (size_t i = 0; i < size; i++) {
         int pos       = static_cast<int>(rand0(engine) * size);
         float delta_E = 2.0 * spin[pos] * (spin[neigh[pos].neighbor[0]] +
@@ -25,9 +21,8 @@ void Ising3::sweep_lattice_clean(float beta, std::mt19937 &engine)
                                            spin[neigh[pos].neighbor[4]] +
                                            spin[neigh[pos].neighbor[5]]);
 
-        // Accept / reject flip
-        // SIMD optimized functions used to compute exp(-beta * delta_E)
-        if (rand0(engine) < bs::exp(bs::multiplies(-beta, delta_E)))
+        // Accept / Reject
+        if (rand0(engine) < exp(-beta * delta_E))
             spin[pos] = -spin[pos];
     } // Sweep over sites
 }
@@ -39,8 +34,6 @@ void Ising3::sweep_lattice_clean(float beta, std::mt19937 &engine)
  */
 void Ising3::sweep_lattice_disorder(float beta, std::mt19937 &engine)
 {
-    namespace bs = boost::simd;
-
     for (size_t i = 0; i < size; i++) {
         int pos       = static_cast<int>(rand0(engine) * size);
         float delta_E = 2.0 * spin[pos] * (J[pos].J_arr[0] * spin[neigh[pos].neighbor[0]] +
@@ -50,9 +43,8 @@ void Ising3::sweep_lattice_disorder(float beta, std::mt19937 &engine)
                                            J[pos].J_arr[4] * spin[neigh[pos].neighbor[4]] +
                                            J[pos].J_arr[5] * spin[neigh[pos].neighbor[5]]);
 
-        // Accept / reject flip
-        // SIMD optimized functions used to compute exp(-beta * delta_E)
-        if (rand0(engine) < bs::exp(bs::multiplies(-beta, delta_E)))
+        // Accept / Reject
+        if (rand0(engine) < exp(-beta * delta_E))
             spin[pos] = -spin[pos];
     } // Sweep over sites
 }
