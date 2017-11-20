@@ -18,7 +18,7 @@ Model3::Model3() : isClean(true), rand0(0.0, 1.0)
  */
 Model3::Model3(const int L) : isClean(true), rand0(0.0, 1.0)
 {
-    size = L * L;
+    size = L * L * L;
 
     neigh.resize(size);
     J.resize(n_neigh * size);
