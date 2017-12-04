@@ -16,7 +16,7 @@ class Model3
     protected:
         size_t warmup  = 30000;
         size_t measure = 500000;
-        static const int n_neigh = 4;
+        static const int n_neigh = 6;
         size_t size;
         bool isClean;
         std::uniform_real_distribution<float> rand0;
