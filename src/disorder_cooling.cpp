@@ -26,6 +26,25 @@ std::array<TT, N> compute_energy(const std::array<TT, N> &T, Model &model)
 }
 
 
+/* compute_binder()
+ * Finds the binder ratio for a clean model.
+ */
+template <typename TT, typename Model, size_t N>
+std::array<TT, N> compute_binder(const std::array<TT, N> &T, Model &model)
+{
+    if ((!std::is_same<double, TT>::value || std::is_same<float, TT>::value)) {
+        std::cerr << "Error: Expected array of float or double." << std::endl;
+        exit(EXIT_FAILURE);
+    }
+
+    std::array<TT, N> binder = {0};
+
+    run_mc_binder(T, binder, model);
+
+    return binder;
+}
+
+
 /* compute_energy()
  * Finds the energy of a disorder model.
  */
@@ -119,6 +138,30 @@ void run_mc_energy(const std::array<TT, N> &T, std::array<TT, N> &E, Model model
             model.set_spin();
             E[i] += model.sweep_energy(1.0 / T[i], engine);
         } // Loop over all temperatures
+    } // Parallel region
+}
+
+/* run_mc_binder()
+ * Runs the computation to find the binder ratio.
+ */
+template <typename TT, typename Model, size_t N>
+void run_mc_binder(const std::array<TT, N> &T, std::array<TT, N> &binder, Model model)
+{
+    int chunk;
+
+    #pragma omp parallel shared(chunk) firstprivate(model) num_threads(4)
+    {
+        #pragma omp single
+        chunk = N / omp_get_num_threads();
+
+        int thd_id = omp_get_thread_num();
+        std::random_device rd;
+        std::mt19937 engine(rd());
+
+        for (int i = chunk * thd_id; i < (chunk * (thd_id + 1)); i++) {
+            model.set_spin();
+            binder[i] += model.sweep_binder(1.0 / T[i], engine);
+        } // Loop over thread chunk for temperatures.
     } // Parallel region
 }
 

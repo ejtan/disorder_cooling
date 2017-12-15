@@ -16,6 +16,9 @@ template <typename TT, typename Model, size_t N>
 std::array<TT, N> compute_energy(const std::array<TT, N> &T, Model &model);
 
 template <typename TT, typename Model, size_t N>
+std::array<TT, N> compute_binder(const std::array<TT, N> &T, Model &model);
+
+template <typename TT, typename Model, size_t N>
 std::array<TT, N> compute_energy(const std::array<TT, N> &T, Model &model,
         double delta, int n_run);
 
@@ -33,6 +36,9 @@ void write_energy(const std::array<TT, N> &E, const std::array<TT, N> &T,
 
 template <typename TT, typename Model, size_t N>
 void run_mc_energy(const std::array<TT, N> &T, std::array<TT, N> &E, Model model);
+
+template <typename TT, typename Model, size_t N>
+void run_mc_binder(const std::array<TT, N> &T, std::array<TT, N> &binder, Model model);
 
 template <typename TT, size_t N>
 double trapezoid(const std::array<TT, N> &x, const std::array<TT, N> &y, int idx);
