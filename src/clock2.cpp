@@ -86,17 +86,21 @@ Clock2::Clock2(const int L, const int _q) : Model2(L), q(_q)
 {
     spin.resize(size);
     cos_val.resize(q);
+    sin_val.resize(q);
 
     // Set spin table
     double dq = 2.0 * M_PI / static_cast<double>(_q);
-    for (int i = 0; i < q; i++)
+    for (int i = 0; i < q; i++) {
         cos_val[i] = cos(i * dq);
+        sin_val[i] = sin(i * dq);
+    }
 }
 
 
 /* Copy constructor
  */
-Clock2::Clock2(const Clock2 &rhs) : Model2(rhs),  q(rhs.q), spin(rhs.spin), cos_val(rhs.cos_val)
+Clock2::Clock2(const Clock2 &rhs) :
+    Model2(rhs), q(rhs.q), spin(rhs.spin), cos_val(rhs.cos_val) ,sin_val(rhs.sin_val)
 {
 }
 
@@ -174,11 +178,14 @@ double Clock2::sweep_binder(double beta, std::mt19937 &engine)
         for (size_t i = 0; i < measure; i++) {
             sweep_lattice_clean(beta, engine);
 
-            double M = 0.0;
-            #pragma omp simd reduction(+:M)
-            for (size_t j = 0; j < size; j++)
-                M += cos_val[spin[j]];
+            double Mx = 0.0, My = 0.0;
+            #pragma omp simd reduction(+:Mx, My)
+            for (size_t j = 0; j < size; j++) {
+                Mx += cos_val[spin[j]];
+                My += sin_val[spin[j]];
+            }
 
+            double M = sqrt(Mx * Mx + My * My);
             M2 += M * M;
             M4 += M * M * M * M;
         }
@@ -189,11 +196,14 @@ double Clock2::sweep_binder(double beta, std::mt19937 &engine)
         for (size_t i = 0; i < measure; i++) {
             sweep_lattice_disorder(beta, engine);
 
-            double M = 0.0;
-            #pragma omp simd reduction(+:M)
-            for (size_t j = 0; j < size; j++)
-                M += cos_val[spin[j]];
+            double Mx = 0.0, My = 0.0;
+            #pragma omp simd reduction(+:Mx, My)
+            for (size_t j = 0; j < size; j++) {
+                Mx += cos_val[spin[j]];
+                My += sin_val[spin[j]];
+            }
 
+            double M = sqrt(Mx * Mx + My * My);
             M2 += M * M;
             M4 += M * M * M * M;
         }

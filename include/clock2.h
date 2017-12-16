@@ -17,6 +17,7 @@ class Clock2 : public Model2
         int q;
         std::vector<int> spin;
         std::vector<double> cos_val;
+        std::vector<double> sin_val;
 
         void sweep_lattice_clean(float beta, std::mt19937 &engine);
         void sweep_lattice_disorder(float beta, std::mt19937 &engine);
