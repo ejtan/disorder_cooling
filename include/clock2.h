@@ -27,6 +27,7 @@ class Clock2 : public Model2
         Clock2(const Clock2 &rhs);
         void set_spin();
         double sweep_energy(double beta, std::mt19937 &engine);
+        double sweep_binder(double beta, std::mt19937 &engine);
 };
 
 #endif
