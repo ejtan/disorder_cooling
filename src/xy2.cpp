@@ -35,3 +35,12 @@ double XY2::sweep_energy(double beta, std::mt19937 &engine)
 {
     return Clock2::sweep_energy(beta, engine);
 }
+
+
+/* sweep_binder()
+ * Calls clock model sweep_binder()
+ */
+double XY2::sweep_binder(double beta, std::mt19937 &engine)
+{
+    return Clock2::sweep_binder(beta, engine);
+}

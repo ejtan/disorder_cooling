@@ -17,6 +17,7 @@ class XY2 : public Clock2
         XY2(const XY2 &rhs);
         void set_spin();
         double sweep_energy(double beta, std::mt19937 &engine);
+        double sweep_binder(double beta, std::mt19937 &engine);
 };
 
 
