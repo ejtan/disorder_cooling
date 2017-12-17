@@ -2,6 +2,7 @@
 #define DATA_MATRIX_H
 
 #include <cstddef>
+#include <iostream>
 
 
 /* Data_matrix class
@@ -21,6 +22,7 @@ class Data_matrix
         Data_matrix(const Data_matrix &rhs);
         ~Data_matrix();
         void insert_array(const double *input);
+        friend std::ostream& operator<<(std::ostream &os, const Data_matrix &rhs);
 };
 
 #endif

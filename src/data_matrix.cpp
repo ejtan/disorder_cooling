@@ -46,3 +46,20 @@ void Data_matrix::insert_array(const double *input)
 
     filled_row++;
 }
+
+
+/* overload <<
+ * Outputs columns of data as a matrix.
+ */
+std::ostream& operator<<(std::ostream &os, const Data_matrix &rhs)
+{
+    for (size_t i = 0; i < rhs.N_row; i++) {
+        for (size_t j = 0; j < rhs.N_col; j++) {
+            os << rhs.data[i * rhs.N_col + j] << ' ';
+        }
+        os << '\n';
+    }
+    os << std::flush;
+
+    return os;
+}
