@@ -116,3 +116,46 @@ double Ising3::sweep_energy(double beta, std::mt19937 &engine)
 
     return E_tot / static_cast<double>(measure * size);
 }
+
+/* sweep_energy()
+ * Performs binder ratio sweep.
+ */
+double Ising3::sweep_binder(double beta, std::mt19937 &engine)
+{
+    double M2 = 0.0, M4 = 0.0;
+
+    if (isClean) {
+        for (size_t i = 0; i < warmup; i++)
+            sweep_lattice_clean(beta, engine);
+
+        for (size_t i = 0; i < measure; i++) {
+            sweep_lattice_clean(beta, engine);
+
+            double M = 0.0;
+            #pragma omp simd reduction(+:M)
+            for (size_t j = 0; j < size; j++)
+                M += spin[j];
+            M2 += M * M;
+            M4 += M * M * M * M;
+        } // Measurement sweep
+    } else {
+        for (size_t i = 0; i < warmup; i++)
+            sweep_lattice_disorder(beta, engine);
+
+        for (size_t i = 0; i < measure; i++) {
+            sweep_lattice_disorder(beta, engine);
+
+            double M = 0.0;
+            #pragma omp simd reduction(+:M)
+            for (size_t j = 0; j < size; j++)
+                M += spin[j];
+            M2 += M * M;
+            M4 += M * M * M * M;
+        }
+    }
+
+    M2 /= static_cast<double>(measure);
+    M4 /= static_cast<double>(measure);
+
+    return 1.0 - (M4 / (3.0 * M2 * M2));
+}

@@ -25,7 +25,7 @@ class Ising3 : public Model3
         Ising3(const Ising3 &rhs);
         void set_spin();
         double sweep_energy(double beta, std::mt19937 &engine);
-
+        double sweep_binder(double beta, std::mt19937 &engine);
 };
 
 #endif
