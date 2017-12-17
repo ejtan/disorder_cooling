@@ -17,7 +17,7 @@ class Clock3 : public Model3
     private:
         int q;
         std::vector<int> spin;
-        std::vector<double> cos_val;
+        std::vector<double> cos_val, sin_val;
 
         void sweep_lattice_clean(float beta, std::mt19937 &engine);
         void sweep_lattice_disorder(float beta, std::mt19937 &engine);
@@ -28,6 +28,7 @@ class Clock3 : public Model3
         Clock3(const Clock3 &rhs);
         void set_spin();
         double sweep_energy(double beta, std::mt19937 &engine);
+        double sweep_binder(double beta, std::mt19937 &engine);
 };
 
 #endif
