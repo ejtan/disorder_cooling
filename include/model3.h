@@ -29,6 +29,7 @@ class Model3
         Model3(const Model3 &rhs);
         virtual void set_spin() = 0;
         virtual double sweep_energy(double beta, std::mt19937 &engine) = 0;
+        virtual double sweep_binder(double beta, std::mt19937 &engine) = 0;
         void set_exchange(double delta);
         std::vector<Exchange<3>> get_exchange() const;
         void set_run_param(size_t Warmup, size_t Measure);
