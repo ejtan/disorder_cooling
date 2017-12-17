@@ -6,6 +6,11 @@
 #include <string>
 
 #include "ising2.h"
+#include "clock2.h"
+#include "xy2.h"
+#include "ising3.h"
+#include "clock3.h"
+#include "xy3.h"
 
 
 /* Header file for Monte Carlo simulations of classical spin models.
