@@ -72,6 +72,31 @@ std::array<TT, N> compute_energy(const std::array<TT, N> &T, Model &model,
 }
 
 
+/* compute_binder()
+ * Generates the curves for the binder ratio.
+ */
+template <typename TT, typename Model, size_t N>
+std::array<TT, N> compute_binder(const std::array<TT, N> &T, Model &model,
+        double delta, int n_run)
+{
+    if (!(std::is_same<double, TT>::value || std::is_same<float, TT>::value)) {
+        std::cerr << "Error: Expected array of floar or double." << std::endl;
+        exit(EXIT_FAILURE);
+    } // Check for correct inputs.
+
+    std::array<TT, N> binder = {0};
+
+    for (int run = 0; run < n_run; run++) {
+        model.set_exchange(delta);
+        run_mc_binder(T, binder, model);
+    } // Loop over runs
+
+    std::transform(binder.begin(), binder.end(), binder.begin(),
+            [n_run](double val) { return val / static_cast<double>(n_run); });
+
+    return binder;
+}
+
 /* compute_entropy()
  * Takes in an energy and a tempearture array, computes the entropy, and outputs to a file.
  * There will be N-1 points in the output file due to the integration.
