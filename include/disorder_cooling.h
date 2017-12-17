@@ -11,6 +11,7 @@
 #include "ising3.h"
 #include "clock3.h"
 #include "xy3.h"
+#include "data_matrix.h"
 
 
 /* Header file for Monte Carlo simulations of classical spin models.
