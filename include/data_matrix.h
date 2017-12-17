@@ -1,6 +1,8 @@
 #ifndef DATA_MATRIX_H
 #define DATA_MATRIX_H
 
+#include <cstddef>
+
 
 /* Data_matrix class
  * Matrix for storing multiple columns of data.
@@ -9,7 +11,7 @@
 class Data_matrix
 {
     private:
-        size_t Nrow, Ncol;
+        size_t N_row, N_col;
         int filled_row;
         double *data;
 
@@ -18,6 +20,7 @@ class Data_matrix
         Data_matrix(size_t r, size_t c);
         Data_matrix(const Data_matrix &rhs);
         ~Data_matrix();
+        void insert_array(const double *input);
 };
 
 #endif
