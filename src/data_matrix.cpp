@@ -22,3 +22,12 @@ Data_matrix::Data_matrix(const Data_matrix &rhs) :
     N_row(rhs.N_row), N_col(rhs.N_col), filled_row(rhs.filled_row), data(rhs.data)
 {
 }
+
+
+/* Destuctor
+ */
+Data_matrix::~Data_matrix()
+{
+    if (data)
+        delete[] data;
+}
