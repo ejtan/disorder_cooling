@@ -39,10 +39,8 @@ Data_matrix::~Data_matrix()
  */
 void Data_matrix::insert_array(const double *input)
 {
-    int offset = filled_row * N_row;
-
     for (size_t i = 0; i < N_row; i++)
-        data[i * N_col + offset] = input[i];
+        data[i * N_col + filled_row] = input[i];
 
     filled_row++;
 }
