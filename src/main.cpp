@@ -118,6 +118,64 @@ void test_ising(const std::array<double, N_pts> &T)
  */
 void test_clock(const std::array<double, N_pts> &T)
 {
+    Data_matrix data_clean2(N_pts, N_L+1);
+    Data_matrix data_clean3(N_pts, N_L+1);
+    Data_matrix data_disorder2(N_pts, N_L+1);
+    Data_matrix data_disorder3(N_pts, N_L+1);
+
+    data_clean2.insert_array(T.data());
+    data_clean3.insert_array(T.data());
+    data_disorder2.insert_array(T.data());
+    data_disorder3.insert_array(T.data());
+
+    std::cout << "Performing 2D clock (2 spins) (clean)\n";
+    for (int i = 0; i < N_L; i++) {
+        std::cout << "\tL = " << L[i] << "... ";
+        Clock2 clock(L[i], 2);
+        clock.set_run_param(30000, 50000);
+        auto binder = compute_binder(T, clock);
+        data_clean2.insert_array(binder.data());
+    }
+
+    std::cout << "Performing 2D clock (2 spins) (disorder)\n";
+    for (int i = 0; i < N_L; i++) {
+        std::cout << "\tL = " << L[i] << "... ";
+        Clock2 clock(L[i], 2);
+        clock.set_run_param(30000, 50000);
+        auto binder = compute_binder(T, clock, delta, N_run);
+        data_disorder2.insert_array(binder.data());
+    }
+
+    std::cout << "Performing 3D clock (2 spins) (clean)\n";
+    for (int i = 0; i < N_L; i++) {
+        std::cout << "\tL = " << L[i] << "... ";
+        Clock3 clock(L[i], 2);
+        clock.set_run_param(30000, 50000);
+        auto binder = compute_binder(T, clock);
+        data_clean3.insert_array(binder.data());
+    }
+
+    std::cout << "Performing 3D clock (2 spins) (clean)\n";
+    for (int i = 0; i < N_L; i++) {
+        std::cout << "\tL = " << L[i] << "... ";
+        Clock3 clock(L[i], 2);
+        clock.set_run_param(30000, 50000);
+        auto binder = compute_binder(T, clock, delta, N_run);
+        data_disorder3.insert_array(binder.data());
+    }
+
+    std::ofstream of_clean2("binder_clean_clock2.dat"), of_disorder2("binder_disorder_clock2.dat"),
+        of_clean3("binder_clean_clock3.dat"), of_disorder3("binder_disorder_clock3.dat");
+
+    of_clean2 << data_clean2;
+    of_clean3 << data_clean3;
+    of_disorder2 << data_disorder2;
+    of_disorder3 << data_disorder3;
+
+    of_clean2.close();
+    of_clean3.close();
+    of_disorder2.close();
+    of_disorder3.close();
 }
 
 
