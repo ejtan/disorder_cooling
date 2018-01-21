@@ -178,7 +178,7 @@ double Clock3::sweep_binder(double beta, std::mt19937 &engine)
 {
     double M2 = 0.0, M4 = 0.0;
 
-    if (!isClean) {
+    if (isClean) {
         for (size_t i = 0; i < warmup; i++)
             sweep_lattice_clean(beta, engine);
 
