@@ -198,10 +198,10 @@ double Clock3::sweep_binder(double beta, std::mt19937 &engine)
         }
     } else {
         for (size_t i = 0; i < warmup; i++)
-            sweep_lattice_clean(beta, engine);
+            sweep_lattice_disorder(beta, engine);
 
         for (size_t i = 0; i < measure; i++) {
-            sweep_lattice_clean(beta, engine);
+            sweep_lattice_disorder(beta, engine);
 
             double Mx = 0.0, My = 0.0;
             #pragma omp simd reduction(+:Mx, My)
