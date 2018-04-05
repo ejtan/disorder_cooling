@@ -1,7 +1,11 @@
 template <int Dim, int L>
 Model<Dim, L>::Model() : isClean(true), rand0(0.0, 1.0)
 {
-    size = L * L;
+    if (Dim == 2)
+        size = L * L;
+    else if (Dim == 3)
+        size = L * L * L;
+
     neigh.resize(size);
     J.resize(size);
 
@@ -26,6 +30,7 @@ void Model<Dim, L>::set_exchange(double delta)
 
     std::random_device rd;
     std::mt19937 engine(rd());
+    float r_val, J_val;
 
     for (int i = 0; i < size; i++) {
         // 0 - 2 bond

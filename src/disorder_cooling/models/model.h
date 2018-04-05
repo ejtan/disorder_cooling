@@ -27,7 +27,7 @@ class Model
         bool isClean;
         std::uniform_real_distribution<float> rand0;
         std::vector< Neighbor<Dim, L> > neigh;
-        std::vector< Exchange<Dim, L> > J;
+        std::vector< Exchange<Dim> > J;
 
     public:
         /* Constructors
@@ -48,7 +48,7 @@ class Model
          *
          * @return: double representing the energy at beta.
          */
-        virtual void sweep_energy(double beta, std::mt19937 &engine) = 0;
+        virtual double sweep_energy(double beta, std::mt19937 &engine) = 0;
 
         /* virtual sweep_binder()
          *
@@ -57,7 +57,7 @@ class Model
          *
          * @return: double representing the binder ratio at beta.
          */
-        virtual void sweep_binder(double beta, std::mt19937 &engine) = 0;
+        virtual double sweep_binder(double beta, std::mt19937 &engine) = 0;
 
         /* set_exchange()
          *
