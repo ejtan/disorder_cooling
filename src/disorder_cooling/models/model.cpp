@@ -21,7 +21,6 @@ Model<Dim, L>::Model(const Model &rhs) :
 }
 
 
-
 template <int Dim, int L>
 void Model<Dim, L>::set_exchange(double delta)
 {
