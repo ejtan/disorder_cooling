@@ -1,3 +1,4 @@
+#include <numeric>
 #include <cmath>
 
 
@@ -61,8 +62,7 @@ Ising<Dim, L>::Ising(const Ising &rhs) : Model<Dim, L>(rhs), spin(rhs.spin)
 template <int Dim, int L>
 void Ising<Dim, L>::set_spin()
 {
-    for (auto &&s : spin)
-        s = 1;
+    std::fill(spin.begin(), spin.end(), 1);
 }
 
 
@@ -126,10 +126,7 @@ double Ising<Dim, L>::sweep_binder(double beta, std::mt19937 &engine)
         for (int i = 0; i < measure; i++) {
             sweep_lattice_clean(beta, engine);
 
-            double M = 0.0;
-            #pragma omp simd reduction(+:M)
-            for (int j = 0; j < size; j++)
-                M += spin[j];
+            double M = std::accumulate(spin.begin(), spin.end(), 0);
 
             M2 += M * M;
             M4 += M * M * M * M;
@@ -141,10 +138,7 @@ double Ising<Dim, L>::sweep_binder(double beta, std::mt19937 &engine)
         for (int i = 0; i < measure; i++) {
             sweep_lattice_disorder(beta, engine);
 
-            double M = 0.0;
-            #pragma omp simd reduction(+:M)
-            for (int j = 0; j < size; j++)
-                M += spin[j];
+            double M = std::accumulate(spin.begin(), spin.end(), 0);
 
             M2 += M * M;
             M4 += M * M * M * M;

@@ -125,10 +125,16 @@ Clock<Dim, L, q>::Clock()
 
     double dq = 2.0 * M_PI / static_cast<double>(q);
 
-    for (int i = 0; i < q; ++i) {
-        cos_val[i] = cos(i * dq);
-        sin_val[i] = sin(i * dq);
-    } // Set table containing cos and sin values
+    std::generate(cos_val.begin(), cos_val.end(), [dq, i = 0]() mutable {
+            double ret_val = cos(i * dq);
+            i++;
+            return ret_val;
+    });
+    std::generate(sin_val.begin(), sin_val.end(), [dq, i = 0]() mutable {
+            double ret_val = cos(i * dq);
+            i++;
+            return ret_val;
+    });
 }
 
 
@@ -144,9 +150,9 @@ void Clock<Dim, L, q>::set_spin()
 {
     std::random_device rd;
     std::mt19937 engine(rd());
+    std::uniform_int_distribution<int> dist(0, q);
 
-    for (auto &&s : spin)
-        s = static_cast<int>(rand0(engine) * q);
+    std::generate(spin.begin(), spin.end(), [&engine, &dist]()->int { return dist(engine); });
 }
 
 
